@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>863</width>
+    <height>653</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>0</y>
+      <width>751</width>
+      <height>461</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>863</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_prj">
+    <property name="title">
+     <string>工程</string>
+    </property>
+    <addaction name="action_createPrj"/>
+    <addaction name="action_openPrj"/>
+    <addaction name="action_mngPrj"/>
+    <addaction name="action_closePrj"/>
+    <addaction name="action_exitApp"/>
+   </widget>
+   <addaction name="menu_prj"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="separator"/>
+   <addaction name="action_mngPrj"/>
+   <addaction name="action_openPrj"/>
+   <addaction name="action_closePrj"/>
+  </widget>
+  <action name="action_createPrj">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/new/img/img/create.png</normaloff>:/new/img/img/create.png</iconset>
+   </property>
+   <property name="text">
+    <string>新建工程</string>
+   </property>
+  </action>
+  <action name="action_openPrj">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/new/img/img/open.png</normaloff>:/new/img/img/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>打开工程</string>
+   </property>
+  </action>
+  <action name="action_mngPrj">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/new/img/img/manage.png</normaloff>:/new/img/img/manage.png</iconset>
+   </property>
+   <property name="text">
+    <string>工程管理</string>
+   </property>
+  </action>
+  <action name="action_closePrj">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/new/img/img/close.png</normaloff>:/new/img/img/close.png</iconset>
+   </property>
+   <property name="text">
+    <string>关闭工程</string>
+   </property>
+  </action>
+  <action name="action_exitApp">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/new/img/img/exit.png</normaloff>:/new/img/img/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>退出</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="img.qrc"/>
+ </resources>
+ <connections/>
+</ui>
