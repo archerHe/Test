@@ -6,6 +6,8 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QtGui>
+#include <QScrollArea>
 
 namespace Ui {
 class common_window;
@@ -31,6 +33,8 @@ private:
     QLineEdit *le_sleep_time;
     QLabel *lbl_homepage;
     QLineEdit *le_homepage;
+
+    QScrollArea *area;
 
 
 };
