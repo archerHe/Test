@@ -1,6 +1,7 @@
 #include "wizard.h"
 #include "ui_wizard.h"
-#include "globaldata.h"
+#include "mainwindow.h"
+#include "global.h"
 #include <QtCore>
 #include <QtGui>
 #include <QGridLayout>
@@ -8,7 +9,9 @@
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
-
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QObject>
 
 
 Wizard::Wizard(QWidget *parent) :
@@ -20,7 +23,7 @@ Wizard::Wizard(QWidget *parent) :
     initFirstPage();
     addPage(firstPage);
 
-
+MainWindow::wizardAcceptFlag = false;
 
 }
 
@@ -69,11 +72,13 @@ void Wizard::initSecondPage()
 
 void Wizard::createPrj()
 {
+    QDir::setCurrent(Global::prj_home_path);
 
     QDir *qDir = new QDir();
     if(qDir->exists(lePrjPath->text() + "/wb_project"))
     {
-        qDebug() << "this is android root dir";
+        Global::srcPath = lePrjPath->text();
+        qDebug() << "this is android root dir : " << Global::srcPath;
     }
     else
     {
@@ -92,8 +97,59 @@ void Wizard::createPrj()
     }
      qDir->mkdir("Project/" + lePrjName->text());
     QDir::setCurrent("Project/" + lePrjName->text());
-    qDebug() << "cur path:"<< QDir::currentPath();
-    //bug current path err, next creat prj
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(lePrjName->text() + ".db");
+    if(db.open())
+    {
+        qDebug()<<"create database success";
+    }
+    else
+    {
+        qDebug()<<"create fail database";
+    }
+
+    QSqlQuery query = QSqlQuery(db);
+    if(db.tables().contains("common_page"))
+    {
+        qDebug()<< "table common_page is exist,delete";
+        if(query.exec("drop table common_page"))
+        {
+            qDebug()<<"drop table common_page";
+        }
+    }
+    QString str_exec = "create table common_page("
+                       "id integer primary key autoincrement,"
+                       "model varchar,"
+                       "bt_name varchar,"
+                        "homepage varchar,"
+                        "sleep_time int,"
+                        "def_language varchar,"
+                        "display_id varchar,"
+                        "wifi_state varchar,"
+                        "bt_state varchar,"
+                        "timezone varchar,"
+                        "def_volume int,"
+                        "adb_state varchar,"
+                        "screenshot_btn varchar"
+                        ")";
+    if(query.exec(str_exec))
+    {
+        qDebug() << "create table success";
+    }
+    else
+    {
+        qDebug() << "fail create table";
+    }
+
+   /* query.exec("insert into common_page values("
+               "null,"
+               "F719SR,"
+               "QT,"
+               "www.baidu.com"
+               "1000)");*/
+
+
 
 
 
@@ -110,7 +166,8 @@ void Wizard::on_choosePrjBtn_clicked()
 void Wizard::accept()
 {
       createPrj();
-
+    MainWindow::wizardAcceptFlag = true;
+      close();
 
 
 }

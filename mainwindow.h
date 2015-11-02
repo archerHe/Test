@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "common_window.h"
-#include "testwidget.h"
+#include "texthelper.h"
 #include <QMainWindow>
 #include <QListWidget>
 #include <QStackedWidget>
@@ -29,11 +29,19 @@ public:
     void initDir();
     void init_common_page();
 
+    static bool wizardAcceptFlag;
+
+public slots:
+    void loadCfg();
+
 private slots:
     void on_actNew_triggered();
 
+
 private:
     Ui::MainWindow *ui;
+
+    TextHelper TextHelper;
 
     QListWidget     *listWidget;
     QStackedWidget  *stackedWidget;

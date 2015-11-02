@@ -108,6 +108,7 @@
    <addaction name="actClose"/>
    <addaction name="actSave"/>
    <addaction name="actSaveAs"/>
+   <addaction name="actApply"/>
   </widget>
   <action name="actNew">
    <property name="checkable">
@@ -188,6 +189,15 @@
   <action name="actSelectAll">
    <property name="text">
     <string>全选</string>
+   </property>
+  </action>
+  <action name="actApply">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/new/img/img/apply.png</normaloff>:/new/img/img/apply.png</iconset>
+   </property>
+   <property name="text">
+    <string>开始应用</string>
    </property>
   </action>
  </widget>

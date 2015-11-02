@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include <QTextBrowser>
 #include <QPushButton>
-#include "globaldata.h"
+
 
 namespace Ui {
 class Wizard;

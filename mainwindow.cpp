@@ -2,7 +2,8 @@
 #include "ui_mainwindow.h"
 #include "common_window.h"
 #include "wizard.h"
-#include "testwidget.h"
+#include "global.h"
+#include "texthelper.h"
 #include <QToolButton>
 #include <QMenu>
 #include <QSpinBox>
@@ -17,6 +18,7 @@
 #include <QScrollArea>
 #include <QDir>
 #include <QComboBox>
+#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -56,7 +58,8 @@ MainWindow::MainWindow(QWidget *parent) :
     main_layout->setStretchFactor(listWidget,1);
     main_layout->setStretchFactor(stackedWidget, 5);
     w->setLayout(main_layout);
-    //ui->centralWidget->setLayout(main_layout);
+
+
 
 
 
@@ -66,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 }
+bool MainWindow::wizardAcceptFlag = false;
 
 MainWindow::~MainWindow()
 {
@@ -194,9 +198,20 @@ void MainWindow::init_common_page()
 
 }
 
+void MainWindow::loadCfg()
+{
+    if(MainWindow::wizardAcceptFlag == false)
+    return;
+
+    QFile boardcfgPath(Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk");
+    qDebug() << boardcfgPath.fileName() << "Wizard finished.......";
+
+}
+
 void MainWindow::on_actNew_triggered()
 {
-    Wizard *wizard = new Wizard();
+    Wizard *wizard = new Wizard(this);
+    connect(wizard, SIGNAL(finished(int)), this, SLOT(loadCfg()));
     int result = wizard->exec();
     qDebug() << "wizard.exec: " << result;
 }

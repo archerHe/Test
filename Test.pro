@@ -16,20 +16,23 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     common_window.cpp \
-    testwidget.cpp \
     wizard.cpp \
-    globaldata.cpp
+    global.cpp \
+    texthelper.cpp \
+    loadcfgfromsrc.cpp
 
 HEADERS  += mainwindow.h \
     common_window.h \
-    testwidget.h \
     wizard.h \
-    globaldata.h
+    global.h \
+    texthelper.h \
+    loadcfgfromsrc.h
 
 FORMS    += mainwindow.ui \
     common_window.ui \
     testwidget.ui \
-    wizard.ui
+    wizard.ui \
+    loadcfgfromsrc.ui
 
 
 
