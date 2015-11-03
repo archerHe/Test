@@ -32,8 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     prj_home_path = QDir::currentPath();
 
     listWidget = new QListWidget();
-    listWidget->insertItem(0,"常用项");
-    listWidget->insertItem(1,"设置项");
+    listWidget->insertItem(0, "常用项");
+    listWidget->insertItem(1, "设置项");
+    listWidget->insertItem(2, "Launcher");
 
 
     //initDir();
@@ -203,8 +204,28 @@ void MainWindow::loadCfg()
     if(MainWindow::wizardAcceptFlag == false)
     return;
 
-    QFile boardcfgPath(Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk");
-    qDebug() << boardcfgPath.fileName() << "Wizard finished.......";
+    //QFile boardcfg(Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk");
+   // QFile sysProp(Global::srcPath +  "/" + Global::devicePath + "/system.prop");
+    QString versionMk = Global::srcPath + "/" + Global::devicePath + "/version_id.mk";
+    QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
+    QString sofiaMk = Global::srcPath + "/" + Global::devicePath + "/sofia3gr.mk";
+    QString sysProp = Global::srcPath +  "/" + Global::devicePath + "/system.prop";
+    QString defSettingProvider = Global::srcPath + "/" + Global::settingproviderPath + "/res/values/defaults.xml";
+    le_model->setText(textHelper.readTextStr(sysProp, "ro.product.model", "prop"));
+    le_bt_name->setText(textHelper.readTextStr(sysProp, "rw.bt.name.wh", "prop"));
+    le_homepage->setText(textHelper.readTextStr(sysProp, "ro.homepage_base.wb", "prop"));
+    le_sleep_time->setText(textHelper.readTextStr(sysProp, "ro.defsleeptime.wb", "prop"));
+    le_homepage->setText(textHelper.readTextStr(sysProp, "ro.homepage_base.wb", "prop"));
+    le_displayId->setText(textHelper.readTextStr(versionMk, "Settings_Build_Number", "prop"));
+    cb_wifi_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_wifi_on", "xml").compare("false") ? 1:0));
+    //cb_bt_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_bluetooth_on", "xml").compare("false") ? 1:0));
+    cb_adb_state->setCurrentIndex((textHelper.readTextStr(sofiaMk, "persist.sys.usb.config", "mk")).contains("adb") ? 1:0);
+    cb_screenshot_btn->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_screenshot_button_show", "xml").compare("false") ? 1:0));
+    //qDebug() << "wifi_state : " << textHelper.readTextStr(defSettingProvider, "def_wifi_on", "xml");
+
+
+
+
 
 }
 
@@ -212,6 +233,6 @@ void MainWindow::on_actNew_triggered()
 {
     Wizard *wizard = new Wizard(this);
     connect(wizard, SIGNAL(finished(int)), this, SLOT(loadCfg()));
-    int result = wizard->exec();
-    qDebug() << "wizard.exec: " << result;
+    wizard->exec();
+
 }

@@ -18,21 +18,18 @@ SOURCES += main.cpp\
     common_window.cpp \
     wizard.cpp \
     global.cpp \
-    texthelper.cpp \
-    loadcfgfromsrc.cpp
+    texthelper.cpp
 
 HEADERS  += mainwindow.h \
     common_window.h \
     wizard.h \
     global.h \
-    texthelper.h \
-    loadcfgfromsrc.h
+    texthelper.h
 
 FORMS    += mainwindow.ui \
     common_window.ui \
     testwidget.ui \
-    wizard.ui \
-    loadcfgfromsrc.ui
+    wizard.ui
 
 
 

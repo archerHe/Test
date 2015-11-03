@@ -41,7 +41,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    TextHelper TextHelper;
+    TextHelper textHelper;
 
     QListWidget     *listWidget;
     QStackedWidget  *stackedWidget;
