@@ -11,6 +11,8 @@ public:
     static QString devicePath;
     static QString settingproviderPath;
     static QString launcherPath;
+    static QString kernelCfgPath;
+    static QString dtsPath;
 
 
 };

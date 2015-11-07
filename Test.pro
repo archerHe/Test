@@ -15,21 +15,27 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    common_window.cpp \
     wizard.cpp \
     global.cpp \
-    texthelper.cpp
+    texthelper.cpp \
+    launcher_page.cpp \
+    hardwarepage.cpp \
+    commonpage.cpp
 
 HEADERS  += mainwindow.h \
-    common_window.h \
     wizard.h \
     global.h \
-    texthelper.h
+    texthelper.h \
+    launcher_page.h \
+    hardwarepage.h \
+    commonpage.h
 
 FORMS    += mainwindow.ui \
-    common_window.ui \
     testwidget.ui \
-    wizard.ui
+    wizard.ui \
+    launcher_page.ui \
+    hardwarepage.ui \
+    commonpage.ui
 
 
 

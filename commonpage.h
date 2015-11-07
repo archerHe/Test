@@ -1,60 +1,32 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef COMMONPAGE_H
+#define COMMONPAGE_H
 
-
-#include "texthelper.h"
-#include "commonpage.h"
-#include <QMainWindow>
-#include <QListWidget>
-#include <QStackedWidget>
 #include <QWidget>
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QComboBox>
-#include "launcher_page.h"
-#include "hardwarepage.h"
 
 namespace Ui {
-class MainWindow;
+class CommonPage;
 }
 
-class MainWindow : public QMainWindow
+class CommonPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit CommonPage(QWidget *parent = 0);
+    ~CommonPage();
 
-    void initDir();
-    void init_common_page();
-
-    static bool wizardAcceptFlag;
-
-public slots:
-    void loadCfg();
-
-private slots:
-    void on_actNew_triggered();
-
+    void initWidget();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::CommonPage *ui;
 
-    CommonPage    commonPage;
-    Launcher_page launcher_page;
-    HardwarePage  hardwarePage;
+    QScrollArea  *common_page_scrollArea;
 
-
-    TextHelper textHelper;
-
-    QListWidget     *listWidget;
-    QStackedWidget  *stackedWidget;
-    QScrollArea     *common_page_scrollArea;
-
-    QGridLayout *layout;
     QLabel *lbl_model;
     QLineEdit *le_model;
     QLabel *lbl_bt_name;
@@ -87,15 +59,6 @@ private:
     QComboBox *cb_adb_state;
     QLabel *lbl_screenshot_btn;
     QComboBox *cb_screenshot_btn;
-
-
-    QWidget *w;
-    QWidget *common_page_w;
-
-
-
-
-    QString prj_home_path;
 };
 
-#endif // MAINWINDOW_H
+#endif // COMMONPAGE_H

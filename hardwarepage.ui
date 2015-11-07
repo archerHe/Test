@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>common_window</class>
- <widget class="QWidget" name="common_window">
+ <class>HardwarePage</class>
+ <widget class="QWidget" name="HardwarePage">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>688</width>
-    <height>413</height>
+    <width>506</width>
+    <height>376</height>
    </rect>
   </property>
   <property name="windowTitle">

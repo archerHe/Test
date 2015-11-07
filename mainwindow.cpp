@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "common_window.h"
 #include "wizard.h"
 #include "global.h"
 #include "texthelper.h"
@@ -19,6 +18,7 @@
 #include <QDir>
 #include <QComboBox>
 #include <QTextStream>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,22 +35,16 @@ MainWindow::MainWindow(QWidget *parent) :
     listWidget->insertItem(0, "常用项");
     listWidget->insertItem(1, "设置项");
     listWidget->insertItem(2, "Launcher");
+    listWidget->insertItem(3, "硬件配置");
+    listWidget->setSpacing(15);
 
-
-    //initDir();
     init_common_page();
 
-
-
-    QLabel *label1 = new QLabel("first page");
-    QLabel *label2 = new QLabel("second page");
-    QLabel *label3 = new QLabel("third page");
-    QTextEdit *te = new QTextEdit();
-
     stackedWidget = new QStackedWidget();
-    stackedWidget->addWidget(common_page_w);
-    stackedWidget->addWidget(te);
-    stackedWidget->addWidget(label3);
+    stackedWidget->addWidget(&commonPage);
+    stackedWidget->addWidget(new QPushButton("adfafa"));
+    stackedWidget->addWidget(&launcher_page);
+    stackedWidget->addWidget(&hardwarePage);
     connect(listWidget, SIGNAL(currentRowChanged(int)), stackedWidget, SLOT(setCurrentIndex(int)));
 
     QHBoxLayout *main_layout = new QHBoxLayout();
@@ -59,15 +53,6 @@ MainWindow::MainWindow(QWidget *parent) :
     main_layout->setStretchFactor(listWidget,1);
     main_layout->setStretchFactor(stackedWidget, 5);
     w->setLayout(main_layout);
-
-
-
-
-
-
-
-
-
 
 }
 bool MainWindow::wizardAcceptFlag = false;
@@ -132,9 +117,6 @@ void MainWindow::init_common_page()
     cb_screenshot_btn->addItem("关");
     cb_screenshot_btn->addItem("开");
 
-
-
-
     lbl_model = new QLabel(tr("设备型号:"));
     lbl_bt_name = new QLabel(tr("蓝牙名:"));
     lbl_homepage = new QLabel(tr("浏览器主页:"));
@@ -186,12 +168,7 @@ void MainWindow::init_common_page()
     common_scrollLayout->addWidget(cb_adb_state, 12, 1);
     common_scrollLayout->addWidget(lbl_screenshot_btn, 13, 0);
     common_scrollLayout->addWidget(cb_screenshot_btn, 13, 1);
-
-
-
-
     common_scrollLayout->setSpacing(15);
-
 
     common_page_scrollArea->setWidget(common_scrollWidget);
     common_page_layout->addWidget(common_page_scrollArea);

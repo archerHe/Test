@@ -35,7 +35,6 @@ Wizard::~Wizard()
 void Wizard::initFirstPage()
 {
     firstPage = new QWizardPage(this);
-    text = new QTextBrowser();
     lblPrjName = new QLabel();
     lblPrjPath = new QLabel();
     lePrjName = new QLineEdit();
@@ -46,7 +45,7 @@ void Wizard::initFirstPage()
     hBoxLayout->addWidget(lePrjPath);
     hBoxLayout->addWidget(choosePrjBtn);
 
-    text->setText(tr("工程文件啊说法是否啊是否撒发是发法人股 共同韩国额外而非玩儿 发是否爱上发发个梵蒂冈的风格地方是个的风格反对公司的分公司的风格方式的根深蒂固的是个是大概发"));
+
     lblPrjName->setText(tr("工程名"));
     lblPrjPath->setText(tr("Android工程路径"));
 
