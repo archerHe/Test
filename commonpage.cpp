@@ -8,6 +8,8 @@ CommonPage::CommonPage(QWidget *parent) :
     ui->setupUi(this);
 
     initWidget();
+    disableWidget();
+
 }
 
 CommonPage::~CommonPage()
@@ -48,8 +50,14 @@ void CommonPage::initWidget()
         cb_timezone = new QComboBox();
         cb_timezone->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         cb_date_format = new QComboBox();
+        cb_date_format->addItem("24");
+        cb_date_format->addItem("12");
         cb_date_format->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         cb_volume = new QComboBox();
+        cb_volume->addItem("50%");
+        cb_volume->addItem("60%");
+        cb_volume->addItem("70%");
+        cb_volume->addItem("80%");
         cb_volume->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         cb_install_non_market = new QComboBox();
         cb_install_non_market->addItem("关");
@@ -86,7 +94,7 @@ void CommonPage::initWidget()
       //  common_page_w = new QWidget();
         common_page_scrollArea = new QScrollArea();
         common_page_scrollArea->setWidgetResizable(true);
-       QWidget *common_scrollWidget = new QWidget(common_page_scrollArea);
+       common_scrollWidget = new QWidget(common_page_scrollArea);
        common_page_scrollArea->setWidget(common_scrollWidget);
         QGridLayout *common_scrollLayout = new QGridLayout(common_scrollWidget);
 
@@ -126,4 +134,45 @@ void CommonPage::initWidget()
         common_page_layout->addWidget(common_page_scrollArea);
 
 
+}
+
+void CommonPage::disableWidget()
+{
+    QList<QObject *> list = common_scrollWidget->children();
+    QWidget *w;
+    for(int i = 1; i < list.count(); i++)
+    {
+        w = qobject_cast<QWidget *>(list.at(i));
+        w->setDisabled(true);
+    }
+}
+
+void CommonPage::enableWidget()
+{
+    QList<QObject *> list = common_scrollWidget->children();
+    QWidget *w;
+    for(int i = 1; i < list.count(); i++)
+    {
+        w = qobject_cast<QWidget *>(list.at(i));
+        w->setEnabled(true);
+    }
+}
+
+void CommonPage::loadCfg()
+{
+    QString versionMk = Global::srcPath + "/" + Global::devicePath + "/version_id.mk";
+    QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
+    QString sofiaMk = Global::srcPath + "/" + Global::devicePath + "/sofia3gr.mk";
+    QString sysProp = Global::srcPath +  "/" + Global::devicePath + "/system.prop";
+    QString defSettingProvider = Global::srcPath + "/" + Global::settingproviderPath + "/res/values/defaults.xml";
+    le_model->setText(textHelper.readTextStr(sysProp, "ro.product.model", "prop"));
+    le_bt_name->setText(textHelper.readTextStr(sysProp, "rw.bt.name.wh", "prop"));
+    le_homepage->setText(textHelper.readTextStr(sysProp, "ro.homepage_base.wb", "prop"));
+    le_sleep_time->setText(textHelper.readTextStr(sysProp, "ro.defsleeptime.wb", "prop"));
+    le_homepage->setText(textHelper.readTextStr(sysProp, "ro.homepage_base.wb", "prop"));
+    le_displayId->setText(textHelper.readTextStr(versionMk, "Settings_Build_Number", "prop"));
+    cb_wifi_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_wifi_on", "xml").compare("false") ? 1:0));
+    //cb_bt_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_bluetooth_on", "xml").compare("false") ? 1:0));
+    cb_adb_state->setCurrentIndex((textHelper.readTextStr(sofiaMk, "persist.sys.usb.config", "mk")).contains("adb") ? 1:0);
+    cb_screenshot_btn->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_screenshot_button_show", "xml").compare("false") ? 1:0));
 }

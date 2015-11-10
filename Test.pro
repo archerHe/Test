@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     texthelper.cpp \
     launcher_page.cpp \
     hardwarepage.cpp \
-    commonpage.cpp
+    commonpage.cpp \
+    functionpage.cpp
 
 HEADERS  += mainwindow.h \
     wizard.h \
@@ -28,14 +29,16 @@ HEADERS  += mainwindow.h \
     texthelper.h \
     launcher_page.h \
     hardwarepage.h \
-    commonpage.h
+    commonpage.h \
+    functionpage.h
 
 FORMS    += mainwindow.ui \
     testwidget.ui \
     wizard.ui \
     launcher_page.ui \
     hardwarepage.ui \
-    commonpage.ui
+    commonpage.ui \
+    functionpage.ui
 
 
 

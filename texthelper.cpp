@@ -1,11 +1,5 @@
 #include "texthelper.h"
-#include <QFile>
-#include <QTextStream>
-#include <QDebug>
-#include <QTemporaryFile>
-#include <QDir>
-#include <QMessageBox>
-#include <QStringList>
+
 
 TextHelper::TextHelper()
 {
@@ -18,14 +12,17 @@ bool TextHelper::modifyTextStr(QString filePath, QString oriStr, QString newStr)
     QFile file(filePath);
     if(file.open(QIODevice::ReadWrite))
     {
+
         QTextStream stream(&file);
         oriText = stream.readAll();
         newText = oriText.replace(oriStr, newStr);
     }
     else
     {
-        qDebug() << filePath << " open fail";
+        qDebug() << "modifyTextStr: " << " open file fail";
+        return false;
     }
+    return true;
 }
 
 QString TextHelper::readTextStr(QString filePath, QString objStr, QString typeFlag)
@@ -67,4 +64,51 @@ QString TextHelper::readXml(QString xmlLine)
     QString resultStr = strlis2[0];
     return resultStr.trimmed();
 }
+
+bool TextHelper::modifyXml(QString filePath, QString attr, QString newStr)
+{
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        return false;
+    }
+    QDomDocument doc;
+    if(!doc.setContent(&file))
+    {
+        return false;
+    }
+    file.close();
+
+    QDomNode n = doc.firstChild();
+    while(!n.isNull())
+    {
+        if(n.isElement())
+        {
+            QDomElement e = n.toElement();
+            QDomNodeList nodeList = e.childNodes();
+            for(int i = 0; i < nodeList.count(); i++)
+            {
+                QDomNode node = nodeList.at(i);
+                if(node.isElement())
+                {
+                    if(node.toElement().attribute("name") == attr)
+                    {
+                        node.toElement().firstChild().setNodeValue(newStr);
+                    }
+                }
+            }
+        }
+       n = n.nextSibling();
+    }
+    QFile f(filePath);
+    if(!f.open(QIODevice::WriteOnly))
+    {
+        return false;
+    }
+    QTextStream out(&file);
+    doc.save(out, 4, QDomNode::EncodingFromTextStream);
+    f.close();
+}
+
+
 

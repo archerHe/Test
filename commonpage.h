@@ -7,6 +7,8 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QComboBox>
+#include "texthelper.h"
+#include "global.h"
 
 namespace Ui {
 class CommonPage;
@@ -21,11 +23,19 @@ public:
     ~CommonPage();
 
     void initWidget();
+    void disableWidget();
+    void enableWidget();
+
+
+public slots:
+    void loadCfg();
 
 private:
     Ui::CommonPage *ui;
+    TextHelper textHelper;
 
     QScrollArea  *common_page_scrollArea;
+    QWidget *common_scrollWidget;
 
     QLabel *lbl_model;
     QLineEdit *le_model;

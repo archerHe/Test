@@ -13,6 +13,8 @@
 #include <QHBoxLayout>
 #include <QGridLayout>
 #include <QScrollArea>
+#include <QSpacerItem>
+#include "global.h"
 
 namespace Ui {
 class HardwarePage;
@@ -27,6 +29,11 @@ public:
     ~HardwarePage();
 
     void initWidget();
+    void disableWidget();
+    void enableWidget();
+
+public slots:
+    void loadCfg();
 
 private:
     Ui::HardwarePage *ui;
@@ -34,15 +41,22 @@ private:
     QScrollArea *scrollArea;
     QWidget *common_scrollWidget;
 
+    QSpacerItem *vSpacer;
+    QSpacerItem *hSpacer;
+
     QLabel *lbl_screen;
     QLabel *lbl_flash;
     QLabel *lbl_back_cam;
     QLabel *lbl_front_cam;
+    QLabel *lbl_sim_num;
+    QLabel *lbl_ddr_fre;
 
     QComboBox *cb_screen;
     QComboBox *cb_flash;
     QComboBox *cb_back_cam;
     QComboBox *cb_front_cam;
+    QComboBox *cb_sim_num;
+    QComboBox *cb_ddr_fre;
 
     QHBoxLayout *hLayout;
     QVBoxLayout *vLayout;

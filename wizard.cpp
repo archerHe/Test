@@ -147,7 +147,7 @@ void Wizard::createPrj()
                "QT,"
                "www.baidu.com"
                "1000)");*/
-    QFile cfg(lePrjName->text() + "prj");
+    QFile cfg(lePrjName->text() + "." + "prj");
     QTextStream out(&cfg);
     if(!cfg.open(QFile::WriteOnly))
     {
@@ -157,11 +157,6 @@ void Wizard::createPrj()
     out << "ProjectPath=" << lePrjPath->text() << endl;
 
     cfg.close();
-
-
-
-
-
 }
 
 void Wizard::on_choosePrjBtn_clicked()

@@ -15,6 +15,7 @@
 #include <QComboBox>
 #include "launcher_page.h"
 #include "hardwarepage.h"
+#include "functionpage.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,9 +34,6 @@ public:
 
     static bool wizardAcceptFlag;
 
-public slots:
-    void loadCfg();
-
 private slots:
     void on_actNew_triggered();
 
@@ -46,6 +44,7 @@ private:
     CommonPage    commonPage;
     Launcher_page launcher_page;
     HardwarePage  hardwarePage;
+    FunctionPage  functionPage;
 
 
     TextHelper textHelper;

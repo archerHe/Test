@@ -7,6 +7,9 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QGridLayout>
+#include <QScrollArea>
+#include <QSpacerItem>
+#include "global.h"
 
 namespace Ui {
 class Launcher_page;
@@ -21,22 +24,31 @@ public:
     ~Launcher_page();
 
     void initWidget();
+    void disableWidget();
+    void enableWidget();
     void cpWallpaper(QString wallpaperPath);
 
 private slots:
-    void on_btn_wallpaper_choose_clicked();
+    void btn_wallpaper_choose();
 
-    void on_btn_icon_site_clicked();
 
 private:
     Ui::Launcher_page *ui;
 
+    QSpacerItem *vSpacer;
+    QSpacerItem *hSpacer;
+
     QLabel *lbl_wallpaper;
     QLineEdit *le_wallpaper;
     QPushButton *btn_select_wallper;
+    QLabel *lbl_icon_site;
+    QPushButton *btn_icon_site;
 
-    QVBoxLayout *vlayout;
-    QHBoxLayout *hlayout_wallpaper;
+    QScrollArea *scroll;
+    QWidget *scrollWidget;
+    QGridLayout *gridLayout;
+
+    QVBoxLayout *vLayout;
 };
 
 #endif // LAUNCHER_PAGE_H

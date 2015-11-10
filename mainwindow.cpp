@@ -36,15 +36,14 @@ MainWindow::MainWindow(QWidget *parent) :
     listWidget->insertItem(1, "设置项");
     listWidget->insertItem(2, "Launcher");
     listWidget->insertItem(3, "硬件配置");
+    listWidget->insertItem(4, "Patch");
     listWidget->setSpacing(15);
-
-    init_common_page();
-
     stackedWidget = new QStackedWidget();
     stackedWidget->addWidget(&commonPage);
     stackedWidget->addWidget(new QPushButton("adfafa"));
     stackedWidget->addWidget(&launcher_page);
     stackedWidget->addWidget(&hardwarePage);
+    stackedWidget->addWidget(&functionPage);
     connect(listWidget, SIGNAL(currentRowChanged(int)), stackedWidget, SLOT(setCurrentIndex(int)));
 
     QHBoxLayout *main_layout = new QHBoxLayout();
@@ -53,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     main_layout->setStretchFactor(listWidget,1);
     main_layout->setStretchFactor(stackedWidget, 5);
     w->setLayout(main_layout);
+
+ //   QMessageBox::about(this, "error", "dsfgfdgfdgfdgfdg");
 
 }
 bool MainWindow::wizardAcceptFlag = false;
@@ -64,7 +65,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::initDir()
 {
-
     QDir *qDir = new QDir();
 
     if(qDir->exists("Project"))
@@ -75,7 +75,6 @@ void MainWindow::initDir()
     {
         qDir->mkdir("Project");
     }
-
 }
 
 void MainWindow::init_common_page()
@@ -176,40 +175,9 @@ void MainWindow::init_common_page()
 
 }
 
-void MainWindow::loadCfg()
-{
-    if(MainWindow::wizardAcceptFlag == false)
-    return;
-
-    //QFile boardcfg(Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk");
-   // QFile sysProp(Global::srcPath +  "/" + Global::devicePath + "/system.prop");
-    QString versionMk = Global::srcPath + "/" + Global::devicePath + "/version_id.mk";
-    QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
-    QString sofiaMk = Global::srcPath + "/" + Global::devicePath + "/sofia3gr.mk";
-    QString sysProp = Global::srcPath +  "/" + Global::devicePath + "/system.prop";
-    QString defSettingProvider = Global::srcPath + "/" + Global::settingproviderPath + "/res/values/defaults.xml";
-    le_model->setText(textHelper.readTextStr(sysProp, "ro.product.model", "prop"));
-    le_bt_name->setText(textHelper.readTextStr(sysProp, "rw.bt.name.wh", "prop"));
-    le_homepage->setText(textHelper.readTextStr(sysProp, "ro.homepage_base.wb", "prop"));
-    le_sleep_time->setText(textHelper.readTextStr(sysProp, "ro.defsleeptime.wb", "prop"));
-    le_homepage->setText(textHelper.readTextStr(sysProp, "ro.homepage_base.wb", "prop"));
-    le_displayId->setText(textHelper.readTextStr(versionMk, "Settings_Build_Number", "prop"));
-    cb_wifi_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_wifi_on", "xml").compare("false") ? 1:0));
-    //cb_bt_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_bluetooth_on", "xml").compare("false") ? 1:0));
-    cb_adb_state->setCurrentIndex((textHelper.readTextStr(sofiaMk, "persist.sys.usb.config", "mk")).contains("adb") ? 1:0);
-    cb_screenshot_btn->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_screenshot_button_show", "xml").compare("false") ? 1:0));
-    //qDebug() << "wifi_state : " << textHelper.readTextStr(defSettingProvider, "def_wifi_on", "xml");
-
-
-
-
-
-}
-
 void MainWindow::on_actNew_triggered()
 {
     Wizard *wizard = new Wizard(this);
-    connect(wizard, SIGNAL(finished(int)), this, SLOT(loadCfg()));
+    connect(wizard, SIGNAL(finished(int)), &commonPage, SLOT(loadCfg()));
     wizard->exec();
-
 }
