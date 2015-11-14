@@ -29,13 +29,15 @@ Launcher_page::~Launcher_page()
 
 void Launcher_page::initWidget()
 {
-    lbl_wallpaper = new QLabel("WallpaperPath:");
+    lbl_wallpaper = new QLabel("添加壁纸路径:");
+    lbl_wallpaper->setToolTip("asdfdsfdsf");
     le_wallpaper = new QLineEdit();
     le_wallpaper->setFixedWidth(500);
     btn_select_wallper = new QPushButton("...");
-    lbl_icon_site = new QLabel("Icon Site");
+    lbl_icon_site = new QLabel("桌面图标摆放:");
     btn_icon_site = new QPushButton("打开配置文件");
     btn_icon_site->setFixedWidth(100);
+    btn_icon_site->setToolTip("333333333333");
 
     hSpacer = new QSpacerItem(600, 0, QSizePolicy::Expanding, QSizePolicy::Expanding);
     vSpacer = new QSpacerItem(20, 800, QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -84,6 +86,7 @@ void Launcher_page::enableWidget()
 void Launcher_page::cpWallpaper(QString extWallpaperPath)
 {
     QString wallpaperPath = Global::srcPath + "/packages/apps/Launcher3/res/drawable-sw600dp-nodpi/";
+    //QString wallpaperPath02 = Global::srcPath + "/packages/apps/Launcher3/res/drawable-sw600dp-nodpi/";
     QDir *dir = new QDir(extWallpaperPath);
     QStringList fileList = dir->entryList();
     for(int i = 2; i < fileList.length(); i++)
@@ -91,15 +94,22 @@ void Launcher_page::cpWallpaper(QString extWallpaperPath)
         QFile::copy(extWallpaperPath + "/" + fileList[i], wallpaperPath + fileList[i]);
         // qDebug() << extWallpaperPath + "/" + fileList[i] << endl << wallpaperPath + fileList[i];
     }
-
+    QString overlayLauncher = Global::srcPath + "/" + Global::overlayPath + "/packages/apps/Launcher3/res/drawable-sw600dp-nodpi/";
+    QDir *overlay = new QDir(overlayLauncher);
+    if(overlay->exists())
+    {
+        for(int i = 2; i < fileList.length(); i++)
+        {
+            QFile::copy(extWallpaperPath + "/" + fileList[i], overlayLauncher + fileList[i]);
+        }
+    }
 }
 
 void Launcher_page::btn_wallpaper_choose()
 {
     QFileDialog *fileDlg = new QFileDialog();
     QString wallpaperPath = fileDlg->getExistingDirectory(this);
-    //ui->le_wallpaperPath->setText(wallpaperPath);
-   // cpWallpaper(wallpaperPath);
+    le_wallpaper->setText(wallpaperPath);
 }
 
 

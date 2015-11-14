@@ -3,6 +3,7 @@
 #include "wizard.h"
 #include "global.h"
 #include "texthelper.h"
+#include "otherspage.h"
 #include <QToolButton>
 #include <QMenu>
 #include <QSpinBox>
@@ -33,17 +34,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     listWidget = new QListWidget();
     listWidget->insertItem(0, "常用项");
-    listWidget->insertItem(1, "设置项");
+    //listWidget->insertItem(1, "设置项");
     listWidget->insertItem(2, "Launcher");
     listWidget->insertItem(3, "硬件配置");
     listWidget->insertItem(4, "Patch");
+    listWidget->insertItem(5, "其他选项");
     listWidget->setSpacing(15);
     stackedWidget = new QStackedWidget();
     stackedWidget->addWidget(&commonPage);
-    stackedWidget->addWidget(new QPushButton("adfafa"));
+   // stackedWidget->addWidget(new QPushButton("adfafa"));
     stackedWidget->addWidget(&launcher_page);
     stackedWidget->addWidget(&hardwarePage);
     stackedWidget->addWidget(&functionPage);
+    stackedWidget->addWidget(&othersPage);
     connect(listWidget, SIGNAL(currentRowChanged(int)), stackedWidget, SLOT(setCurrentIndex(int)));
 
     QHBoxLayout *main_layout = new QHBoxLayout();

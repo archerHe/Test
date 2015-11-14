@@ -55,8 +55,6 @@ void Wizard::initFirstPage()
     gridlayout->addWidget(lblPrjPath,1,0);
     gridlayout->addLayout(hBoxLayout,1,1);
     firstPage->setLayout(gridlayout);
-
-
 }
 
 void Wizard::initSecondPage()
@@ -155,7 +153,6 @@ void Wizard::createPrj()
     }
     out << "ProjectName=" << lePrjName->text() << endl;
     out << "ProjectPath=" << lePrjPath->text() << endl;
-
     cfg.close();
 }
 

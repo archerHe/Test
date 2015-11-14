@@ -9,10 +9,6 @@ HardwarePage::HardwarePage(QWidget *parent) :
 
     initWidget();
     disableWidget();
-
-
-
-
 }
 
 HardwarePage::~HardwarePage()
@@ -73,6 +69,7 @@ void HardwarePage::initWidget()
     gridLayout->addWidget(cb_sim_num, 4, 1);
     gridLayout->addItem(vSpacer,  5, 0);
     gridLayout->setSpacing(15);
+
     vLayout = new QVBoxLayout();
 
     vLayout->addWidget(scrollArea);

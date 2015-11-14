@@ -28,6 +28,7 @@ public:
     void enableWidget();
     void cpWallpaper(QString wallpaperPath);
 
+
 private slots:
     void btn_wallpaper_choose();
 

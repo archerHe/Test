@@ -13,6 +13,7 @@ public:
     static QString launcherPath;
     static QString kernelCfgPath;
     static QString dtsPath;
+    static QString overlayPath;
 
 
 };

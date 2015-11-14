@@ -16,6 +16,7 @@
 #include "launcher_page.h"
 #include "hardwarepage.h"
 #include "functionpage.h"
+#include "otherspage.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,11 +42,11 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    CommonPage    commonPage;
-    Launcher_page launcher_page;
-    HardwarePage  hardwarePage;
-    FunctionPage  functionPage;
-
+    CommonPage      commonPage;
+    Launcher_page   launcher_page;
+    HardwarePage    hardwarePage;
+    FunctionPage    functionPage;
+    OthersPage      othersPage;
 
     TextHelper textHelper;
 

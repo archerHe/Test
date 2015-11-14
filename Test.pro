@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     launcher_page.cpp \
     hardwarepage.cpp \
     commonpage.cpp \
-    functionpage.cpp
+    functionpage.cpp \
+    otherspage.cpp
 
 HEADERS  += mainwindow.h \
     wizard.h \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.h \
     launcher_page.h \
     hardwarepage.h \
     commonpage.h \
-    functionpage.h
+    functionpage.h \
+    otherspage.h
 
 FORMS    += mainwindow.ui \
     testwidget.ui \
@@ -38,7 +40,8 @@ FORMS    += mainwindow.ui \
     launcher_page.ui \
     hardwarepage.ui \
     commonpage.ui \
-    functionpage.ui
+    functionpage.ui \
+    otherspage.ui
 
 
 

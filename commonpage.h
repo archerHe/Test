@@ -9,6 +9,7 @@
 #include <QComboBox>
 #include "texthelper.h"
 #include "global.h"
+#include <QPushButton>
 
 namespace Ui {
 class CommonPage;
@@ -52,9 +53,14 @@ private:
     QLabel *lbl_brand;
     QLineEdit *le_brand;
     QLabel *lbl_language;
+    QLineEdit *le_language;
+    QLineEdit *le_country;
+    QPushButton *btn_languageList;
     QComboBox *cb_language;
     QLabel *lbl_timezone;
-    QComboBox *cb_timezone;
+//    QComboBox *cb_timezone;
+    QLineEdit *le_timezone;
+    QPushButton *btn_timezoneList;
     QLabel *lbl_date_format;
     QComboBox *cb_date_format;
     QLabel *lbl_volume;

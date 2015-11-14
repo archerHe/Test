@@ -41,10 +41,10 @@ QString TextHelper::readTextStr(QString filePath, QString objStr, QString typeFl
                 if(typeFlag == "xml")
                 {
                     resultStr = readXml(objLine);
-                    //qDebug() << "type is xml~~";
+
                     break;
                 }
-               // qDebug() << "type is normal..";
+
                 QStringList strlist = objLine.split("=");
                 resultStr = strlist[1];
                 break;

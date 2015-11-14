@@ -6,6 +6,7 @@
 #include "launcher_page.h"
 #include "hardwarepage.h"
 #include "commonpage.h"
+#include "otherspage.h"
 #include <QMessageBox>
 
 int main(int argc, char *argv[])
@@ -16,7 +17,8 @@ int main(int argc, char *argv[])
    //  CommonPage h;
      //HardwarePage h;
 
-    w.show();
+   // OthersPage p;
+    //p.show();
 
 
 
@@ -25,10 +27,10 @@ int main(int argc, char *argv[])
 
 
 
-    w.resize(QApplication::desktop()->width() * 0.7 ,QApplication::desktop()->height() * 0.7);
+    //w.resize(QApplication::desktop()->width() * 0.7 ,QApplication::desktop()->height() * 0.7);
     //w.resize(1024,768);
 
-   //w.show();
+   w.show();
     //testWidget.resize(1024, 600);
     //testWidget.show();
 

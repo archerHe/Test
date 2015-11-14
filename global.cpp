@@ -8,5 +8,5 @@ QString Global::devicePath = "device/rockchip/sofia3gr";
 QString Global::settingproviderPath = "frameworks/base/packages/SettingsProvider";
 QString Global::kernelCfgPath = "kernel/arch/x86/configs/i386_sofia_defconfig";
 QString Global::dtsPath  = "kernel/arch/x86/boot/dts/SF_3GR-tablet.dts";
-
+QString Global::overlayPath = "device/rockchip/sofia3gr/overlay";
 
