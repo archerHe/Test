@@ -10,6 +10,7 @@
 #include "texthelper.h"
 #include "global.h"
 #include <QPushButton>
+#include "wizard.h"
 
 namespace Ui {
 class CommonPage;

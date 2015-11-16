@@ -1,9 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
-#include "texthelper.h"
 #include "commonpage.h"
+#include "texthelper.h"
 #include <QMainWindow>
 #include <QListWidget>
 #include <QStackedWidget>
@@ -33,7 +32,7 @@ public:
     void initDir();
     void init_common_page();
 
-    static bool wizardAcceptFlag;
+
 
 private slots:
     void on_actNew_triggered();

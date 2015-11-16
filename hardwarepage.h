@@ -15,6 +15,8 @@
 #include <QScrollArea>
 #include <QSpacerItem>
 #include "global.h"
+#include "texthelper.h"
+#include "wizard.h"
 
 namespace Ui {
 class HardwarePage;
@@ -37,6 +39,8 @@ public slots:
 
 private:
     Ui::HardwarePage *ui;
+
+    TextHelper textHelper;
 
     QScrollArea *scrollArea;
     QWidget *common_scrollWidget;
@@ -62,6 +66,10 @@ private:
     QVBoxLayout *vLayout;
     QGridLayout *gridLayout;
 
+    int preBackCamId;
+    int CurBackCamId;
+    int preFrontCamId;
+    int CurFrontCamId;
 };
 
 #endif // HARDWAREPAGE_H

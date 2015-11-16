@@ -21,6 +21,8 @@ public:
     explicit Wizard(QWidget *parent = 0);
     ~Wizard();
 
+    static bool wizardAcceptFlag;
+
 private:
     Ui::Wizard *ui;
 
@@ -44,6 +46,7 @@ private:
 
 protected slots:
     void accept();
+
     void on_choosePrjBtn_clicked();
 
 };

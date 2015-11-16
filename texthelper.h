@@ -19,6 +19,11 @@ public:
     QString readXml(QString xmlLine);
     bool modifyXml(QString filePath, QString attr, QString newStr);
 
+    int readCam(QString camType, QString dtsPath);
+    void writeCam(int preCamId, int curCamId, QString dtsPath);
+    int disableCam(int camId, QString dts);
+    int enableCam(int camId, QString dts);
+
 
 private:
     QString oriText;

@@ -9,7 +9,7 @@ CommonPage::CommonPage(QWidget *parent) :
     ui->setupUi(this);
 
     initWidget();
-    //disableWidget();
+    disableWidget();
 
 }
 
@@ -20,7 +20,6 @@ CommonPage::~CommonPage()
 
 void CommonPage::initWidget()
 {
-
         le_model = new QLineEdit();
         le_model->setToolTip("有ota功能不能带空格");
         le_model->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -184,6 +183,8 @@ void CommonPage::enableWidget()
 
 void CommonPage::loadCfg()
 {
+    if(Wizard::wizardAcceptFlag == false)
+        return;
     enableWidget();
     QString versionMk = Global::srcPath + "/" + Global::devicePath + "/version_id.mk";
     QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";

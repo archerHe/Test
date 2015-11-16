@@ -110,5 +110,147 @@ bool TextHelper::modifyXml(QString filePath, QString attr, QString newStr)
     f.close();
 }
 
+int TextHelper::readCam(QString camType, QString dtsPath)
+{
+    QFile   *dtsFile =  new QFile(dtsPath);
+    int camera_id = 0;
+    QTextStream ts(dtsFile);
+    if(!dtsFile->open(QIODevice::ReadOnly))
+        return -1;
+    if(camType == "back")
+    {
+        QString strLine;
+        while(!ts.atEnd())
+        {
+            strLine = ts.readLine();
+            QString s = "camera" + QString::number(camera_id, 10);
+            if(strLine.contains(s) && strLine.contains(":"))
+            {
+                strLine = ts.readLine();
+                if(strLine.contains("//"))
+                {
+                    strLine = ts.readLine();
+                    QStringList strlist1 = strLine.split(",");
+                    QString str2 = strlist1[1];
+                    QStringList strlist2 = str2.split("-");
+                    qDebug() << strlist2[0] << " camera_id: " << camera_id;
+                    return camera_id;
+                }
+                camera_id++;
+            }
+        }
+    }
+    if(camType == "front")
+    {
+        camera_id = 6;
+        QString strLine;
+        while(!ts.atEnd())
+        {
+            strLine = ts.readLine();
+            QString s = "camera" + QString::number(camera_id, 10);
+            if(strLine.contains(s) && strLine.contains(":"))
+            {
+
+                strLine = ts.readLine();
+                qDebug() << strLine;
+
+                if(strLine.contains("compatible") || strLine.contains("//"))
+                {
+                    if(strLine.contains("//"))
+                    {
+                        strLine = ts.readLine();
+                    }
+
+                    QStringList strlist1 = strLine.split(",");
+                    QString str2 = strlist1[1];
+                    QStringList strlist2 = str2.split("-");
+                    qDebug() << strlist2[0] << "camera_id: " << camera_id;
+                    return camera_id - 6;
+                }
+                camera_id++;
+            }
+
+        }
+
+    }
+    dtsFile->close();
+}
+
+void TextHelper::writeCam(int preCamId, int curCamId, QString dtsPath)
+{
+    if(preCamId == curCamId)
+        return;
+    disableCam(preCamId, dtsPath);
+    enableCam(curCamId, dtsPath);
+}
+
+int TextHelper::disableCam(int camId, QString dtsPath)
+{
+    //QString dtsPath;
+    QFile   *dtsFile =  new QFile(dtsPath);
+    QFile   *newDtsFile = new QFile(QDir::currentPath() + "/tmp/Sofia3GR-tablet.dts");
+    QTextStream newDts(newDtsFile);
+    QTextStream dtsOld(dtsFile);
+    QString strLine;
+    if(!dtsFile->open(QIODevice::ReadOnly))
+    {
+        return -1;
+    }
+    newDtsFile->open(QIODevice::WriteOnly);
+    while(!dtsOld.atEnd())
+    {
+        strLine = dtsOld.readLine();
+        if(strLine.contains("camera" + QString::number(camId, 10)) && strLine.contains(":"))
+        {
+               newDts << strLine << "\n";
+               newDts << "\t\tstatus = \"disabled\";\n";
+               strLine = dtsOld.readLine();
+               continue;
+        }
+        newDts << strLine << "\n";
+
+    }
+    dtsFile->close();
+    newDtsFile->flush();
+    newDtsFile->close();
+    dtsFile->remove();
+    newDtsFile->copy(dtsPath);
+    return camId;
+}
+
+int TextHelper::enableCam(int camId, QString dtsPath)
+{
+    //QString dtsPath;
+    QFile   *dtsFile =  new QFile(dtsPath);
+    QFile   *newDtsFile = new QFile(QDir::currentPath() + "/tmp/Sofia3GR-tablet.dts");
+    QTextStream newDts(newDtsFile);
+    QTextStream dtsOld(dtsFile);
+    QString strLine;
+    if(!dtsFile->open(QIODevice::ReadOnly))
+    {
+        return -1;
+    }
+    newDtsFile->open(QIODevice::WriteOnly);
+    while(!dtsOld.atEnd())
+    {
+        strLine = dtsOld.readLine();
+        if(strLine.contains("camera" + QString::number(camId, 10)) && strLine.contains(":"))
+        {
+               newDts << strLine << "\n";
+               newDts << "\t\t//status = \"disabled\";\n";
+               strLine = dtsOld.readLine();
+               continue;
+        }
+        newDts << strLine << "\n";
+
+    }
+    dtsFile->close();
+    newDtsFile->flush();
+    newDtsFile->close();
+    dtsFile->remove();
+    newDtsFile->copy(dtsPath);
+    return camId;
+}
+
 
 

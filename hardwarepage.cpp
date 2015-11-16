@@ -44,11 +44,17 @@ void HardwarePage::initWidget()
     cb_flash->addItem("Nand");
     cb_flash->addItem("Emmc");
     cb_back_cam = new QComboBox();
-    cb_back_cam->addItem("OV2680");
-    cb_back_cam->addItem("GC2035");
+    cb_back_cam->addItem("ov13850");
+    cb_back_cam->addItem("OV8858");
+    cb_back_cam->addItem("OV5648");
+    cb_back_cam->addItem("gc2155");
+    cb_back_cam->addItem("sp2508");
+    cb_back_cam->addItem("ov2680");
     cb_front_cam = new QComboBox();
-    cb_front_cam->addItem("SP0310");
-    cb_front_cam->addItem("GC0305");
+    cb_front_cam->addItem("gc2355");
+    cb_front_cam->addItem("gc0310");
+    cb_front_cam->addItem("sp0a20");
+    cb_front_cam->addItem("hm2051");
     cb_sim_num = new QComboBox();
     cb_sim_num->addItem("双卡");
     cb_sim_num->addItem("单卡");
@@ -103,7 +109,16 @@ void HardwarePage::enableWidget()
 
 void HardwarePage::loadCfg()
 {
+    if(Wizard::wizardAcceptFlag == false)
+        return;
+    enableWidget();
     QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
     QString dtsCfg = Global::srcPath + "/" + Global::dtsPath;
     QString kernelCfg = Global::srcPath + "/" + Global::kernelCfgPath;
+
+    preBackCamId    = textHelper.readCam("back", dtsCfg);
+    preFrontCamId   = textHelper.readCam("front", dtsCfg);
+    cb_back_cam->setCurrentIndex(preBackCamId);
+    cb_front_cam->setCurrentIndex(preFrontCamId);
+
 }

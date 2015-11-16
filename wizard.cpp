@@ -23,7 +23,7 @@ Wizard::Wizard(QWidget *parent) :
     initFirstPage();
     addPage(firstPage);
 
-MainWindow::wizardAcceptFlag = false;
+Wizard::wizardAcceptFlag = false;
 
 }
 
@@ -166,8 +166,7 @@ void Wizard::on_choosePrjBtn_clicked()
 void Wizard::accept()
 {
       createPrj();
-    MainWindow::wizardAcceptFlag = true;
+    Wizard::wizardAcceptFlag = true;
       close();
-
 
 }

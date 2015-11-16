@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
  //   QMessageBox::about(this, "error", "dsfgfdgfdgfdgfdg");
 
 }
-bool MainWindow::wizardAcceptFlag = false;
+bool Wizard::wizardAcceptFlag = false;
 
 MainWindow::~MainWindow()
 {
@@ -182,5 +182,6 @@ void MainWindow::on_actNew_triggered()
 {
     Wizard *wizard = new Wizard(this);
     connect(wizard, SIGNAL(finished(int)), &commonPage, SLOT(loadCfg()));
+    connect(wizard, SIGNAL(finished(int)), &hardwarePage, SLOT(loadCfg()));
     wizard->exec();
 }
