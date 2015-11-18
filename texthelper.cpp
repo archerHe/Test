@@ -41,10 +41,16 @@ QString TextHelper::readTextStr(QString filePath, QString objStr, QString typeFl
                 if(typeFlag == "xml")
                 {
                     resultStr = readXml(objLine);
-
                     break;
+                }else if(typeFlag == "boardCfg")
+                {
+                    QStringList strlist = objLine.split(":=");
+                    resultStr = strlist[1];
+                    break;
+                }else if(typeFlag == "kernelCfg")
+                {
+                    return "IPS";
                 }
-
                 QStringList strlist = objLine.split("=");
                 resultStr = strlist[1];
                 break;
@@ -250,6 +256,80 @@ int TextHelper::enableCam(int camId, QString dtsPath)
     dtsFile->remove();
     newDtsFile->copy(dtsPath);
     return camId;
+}
+
+bool TextHelper::writeToText(QString filePath, QString str, QString value, QString split)
+{
+    QFile *oriFile = new QFile(filePath);
+    QFile *tempFile = new QFile(QDir::currentPath() + "/tmp/temp.txt");
+    QTextStream oriTS(oriFile);
+    QTextStream tempTS(tempFile);
+    QString strLine;
+    if(!oriFile->open(QIODevice::ReadOnly))
+    {
+        return false;
+    }
+    if(!tempFile->open(QIODevice::WriteOnly))
+    {
+        return false;
+    }
+    while(!oriTS.atEnd())
+    {
+        strLine = oriTS.readLine();
+        if(strLine.contains(str))
+        {
+            if(split == "id")
+            {
+                tempTS << "export" << " := " << value << "\n";
+                continue;
+            }
+            tempTS << str << split << value << "\n";
+            continue;
+        }
+        tempTS << strLine << "\n";
+    }
+    oriFile->close();
+    tempFile->flush();
+    tempFile->close();
+    oriFile->remove();
+    tempFile->copy(filePath);
+    return true;
+}
+
+bool TextHelper::addWallpaperXml(QString filePath, QString newStr)
+{
+    QFile       wallpaperXml(filePath);
+    QFile       tempXml(QDir::currentPath() + "/tmp/temp.xml");
+    qDebug() << "tempxml: " << QDir::currentPath() + "/tmp/temp.xml";
+    QTextStream wallpaperTS(&wallpaperXml);
+    QTextStream tempTS(&tempXml);
+    QString     strLine;
+    if(!wallpaperXml.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "wallpaperXml open fail";
+        return false;
+    }
+    if(!tempXml.open(QIODevice::WriteOnly))
+    {
+        qDebug() << "tempXml open fail";
+        return false;
+    }
+    while(!wallpaperTS.atEnd())
+    {
+        strLine = wallpaperTS.readLine();
+        if(strLine.contains("<item>default_wallpaper"))
+        {
+            tempTS << strLine << "\n";
+            tempTS << "\t\t<item>" << newStr << "</item>" << "\n";
+            continue;
+        }
+        tempTS << strLine << "\n";
+    }
+    wallpaperXml.close();
+    tempXml.flush();
+    tempXml.close();
+    wallpaperXml.remove();
+    tempXml.copy(filePath);
 }
 
 

@@ -1,6 +1,6 @@
 #include "commonpage.h"
 #include "ui_commonpage.h"
-#include <QSpacerItem>
+
 
 CommonPage::CommonPage(QWidget *parent) :
     QWidget(parent),
@@ -36,12 +36,7 @@ void CommonPage::initWidget()
         le_bright_level->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         le_displayId = new QLineEdit();
         le_displayId->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-       // cb_language = new QComboBox();
-      //  QList<QString> language_list;
-       // language_list << "中文简体" << "英语" << "西班牙语";
-       // QStringList strList =  QStringList(language_list);
-      //  cb_language->addItems(strList);
-      //  cb_language->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
         le_language = new QLineEdit();
         le_language->setToolTip("persist.sys.language=");
         le_language->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -58,8 +53,7 @@ void CommonPage::initWidget()
         cb_bt_state->addItem("关");
         cb_bt_state->addItem("开");
        cb_bt_state->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        //cb_timezone = new QComboBox();
-       // cb_timezone->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
         le_timezone = new QLineEdit();
         le_timezone->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -201,7 +195,53 @@ void CommonPage::loadCfg()
     le_country->setText(textHelper.readTextStr(sysProp, "persist.sys.country", "prop"));
     le_timezone->setText(textHelper.readTextStr(sysProp, "persist.sys.timezone", "prop"));
     cb_wifi_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_wifi_on", "xml").compare("false") ? 1:0));
-    //cb_bt_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_bluetooth_on", "xml").compare("false") ? 1:0));
+    cb_bt_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_bluetooth_on", "xml").compare("false") ? 1:0));
     cb_adb_state->setCurrentIndex((textHelper.readTextStr(sofiaMk, "persist.sys.usb.config", "mk")).contains("adb") ? 1:0);
     cb_screenshot_btn->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_screenshot_button_show", "xml").compare("false") ? 1:0));
+}
+
+void CommonPage::saveCfg()
+{
+    QString versionMk = Global::srcPath + "/" + Global::devicePath + "/version_id.mk";
+    QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
+    QString sofiaMk = Global::srcPath + "/" + Global::devicePath + "/sofia3gr.mk";
+    QString sysProp = Global::srcPath +  "/" + Global::devicePath + "/system.prop";
+    QString defSettingProvider = Global::srcPath + "/" + Global::settingproviderPath + "/res/values/defaults.xml";
+
+    textHelper.writeToText(sysProp, "ro.product.model", le_model->text(), "=");
+    textHelper.writeToText(sysProp, "rw.bt.name.wh", le_bt_name->text(), "=");
+    textHelper.writeToText(sysProp, "ro.homepage_base.wb", le_homepage->text(), "=");
+    textHelper.writeToText(sysProp, "ro.defsleeptime.wb", le_sleep_time->text(), "=");
+    textHelper.writeToText(versionMk, "Settings_Build_Number", le_displayId->text(), "id");
+    textHelper.writeToText(sysProp, "persist.sys.language", le_language->text(), "=");
+    textHelper.writeToText(sysProp, "persist.sys.country", le_country->text(), "=");
+    textHelper.writeToText(sysProp, "persist.sys.timezone", le_timezone->text(), "=");
+    if(cb_wifi_state->currentIndex() == 0)
+    {
+        textHelper.modifyXml(defSettingProvider, "def_wifi_on", "false");
+    }else
+    {
+        textHelper.modifyXml(defSettingProvider, "def_wifi_on", "true");
+    }
+    if(cb_bt_state->currentIndex() == 0)
+    {
+        textHelper.modifyXml(defSettingProvider, "def_bluetooth_on", "false");
+    }else
+    {
+        textHelper.modifyXml(defSettingProvider, "def_bluetooth_on", "true");
+    }
+    if(cb_adb_state->currentIndex() == 0)
+    {
+        textHelper.writeToText(sofiaMk, "persist.sys.usb.config", "mtp", "=");
+    }else
+    {
+        textHelper.writeToText(sofiaMk, "persist.sys.usb.config", "mtp,adb", "=");
+    }
+    if(cb_screenshot_btn->currentIndex() == 0)
+    {
+        textHelper.modifyXml(defSettingProvider, "def_screenshot_button_show", "false");
+    }else
+    {
+        textHelper.modifyXml(defSettingProvider, "def_screenshot_button_show", "true");
+    }
 }

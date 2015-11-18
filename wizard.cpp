@@ -69,7 +69,7 @@ void Wizard::initSecondPage()
 
 void Wizard::createPrj()
 {
-    QDir::setCurrent(Global::prj_home_path);
+
 
     QDir *qDir = new QDir();
     if(qDir->exists(lePrjPath->text() + "/wb_project"))
@@ -154,6 +154,7 @@ void Wizard::createPrj()
     out << "ProjectName=" << lePrjName->text() << endl;
     out << "ProjectPath=" << lePrjPath->text() << endl;
     cfg.close();
+    QDir::setCurrent(Global::prj_home_path);
 }
 
 void Wizard::on_choosePrjBtn_clicked()

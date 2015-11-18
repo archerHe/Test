@@ -19,11 +19,12 @@ public:
     QString readXml(QString xmlLine);
     bool modifyXml(QString filePath, QString attr, QString newStr);
 
-    int readCam(QString camType, QString dtsPath);
-    void writeCam(int preCamId, int curCamId, QString dtsPath);
-    int disableCam(int camId, QString dts);
-    int enableCam(int camId, QString dts);
-
+    int     readCam(QString camType, QString dtsPath);
+    void    writeCam(int preCamId, int curCamId, QString dtsPath);
+    int     disableCam(int camId, QString dts);
+    int     enableCam(int camId, QString dts);
+    bool    writeToText(QString filePath, QString str, QString value, QString split);
+    bool    addWallpaperXml(QString filePath, QString newLine);
 
 private:
     QString oriText;

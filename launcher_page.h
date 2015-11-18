@@ -10,6 +10,7 @@
 #include <QScrollArea>
 #include <QSpacerItem>
 #include "global.h"
+#include "texthelper.h"
 
 namespace Ui {
 class Launcher_page;
@@ -36,6 +37,8 @@ private slots:
 private:
     Ui::Launcher_page *ui;
 
+    TextHelper  textHelper;
+
     QSpacerItem *vSpacer;
     QSpacerItem *hSpacer;
 
@@ -44,6 +47,14 @@ private:
     QPushButton *btn_select_wallper;
     QLabel *lbl_icon_site;
     QPushButton *btn_icon_site;
+
+    QLabel          *lbl_img;
+    QLabel          *lbl_def_wallpaper;
+    QLineEdit       *le_def_wallpaper;
+    QPushButton     *btn_def_wallper;
+    QLabel          *lbl_extFiles;
+    QLineEdit       *le_extFiles;
+    QPushButton     *btn_extFiles;
 
     QScrollArea *scroll;
     QWidget *scrollWidget;

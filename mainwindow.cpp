@@ -27,36 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    w = new QWidget();
-    setCentralWidget(w);
-
-    prj_home_path = QDir::currentPath();
-
-    listWidget = new QListWidget();
-    listWidget->insertItem(0, "常用项");
-    //listWidget->insertItem(1, "设置项");
-    listWidget->insertItem(2, "Launcher");
-    listWidget->insertItem(3, "硬件配置");
-    listWidget->insertItem(4, "Patch");
-    listWidget->insertItem(5, "其他选项");
-    listWidget->setSpacing(15);
-    stackedWidget = new QStackedWidget();
-    stackedWidget->addWidget(&commonPage);
-   // stackedWidget->addWidget(new QPushButton("adfafa"));
-    stackedWidget->addWidget(&launcher_page);
-    stackedWidget->addWidget(&hardwarePage);
-    stackedWidget->addWidget(&functionPage);
-    stackedWidget->addWidget(&othersPage);
-    connect(listWidget, SIGNAL(currentRowChanged(int)), stackedWidget, SLOT(setCurrentIndex(int)));
-
-    QHBoxLayout *main_layout = new QHBoxLayout();
-    main_layout->addWidget(listWidget);
-    main_layout->addWidget(stackedWidget);
-    main_layout->setStretchFactor(listWidget,1);
-    main_layout->setStretchFactor(stackedWidget, 5);
-    w->setLayout(main_layout);
-
- //   QMessageBox::about(this, "error", "dsfgfdgfdgfdgfdg");
+    initMainWindow();
 
 }
 bool Wizard::wizardAcceptFlag = false;
@@ -80,103 +51,73 @@ void MainWindow::initDir()
     }
 }
 
-void MainWindow::init_common_page()
+void MainWindow::initMainWindow()
 {
-    le_model = new QLineEdit();
-    le_model->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    le_bt_name = new QLineEdit();
-    le_bt_name->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    le_homepage = new QLineEdit();
-    le_homepage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    le_homepage->setMinimumWidth(300);
-    le_sleep_time = new QLineEdit();
-    le_sleep_time->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    le_bright_level = new QLineEdit();
-    le_bright_level->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    le_displayId = new QLineEdit();
 
-    cb_language = new QComboBox();
-    QList<QString> language_list;
-    language_list << "中文简体" << "英语" << "西班牙语";
-    QStringList strList =  QStringList(language_list);
-    cb_language->addItems(strList);
-    cb_wifi_state = new QComboBox();
-    cb_wifi_state->addItem("关");
-    cb_wifi_state->addItem("开");
-    cb_bt_state = new QComboBox();
-    cb_bt_state->addItem("关");
-    cb_bt_state->addItem("开");
-    cb_timezone = new QComboBox();
-    cb_date_format = new QComboBox();
-    cb_volume = new QComboBox();
-    cb_install_non_market = new QComboBox();
-    cb_install_non_market->addItem("关");
-    cb_install_non_market->addItem("开");
-    cb_adb_state = new QComboBox();
-    cb_adb_state->addItem("关");
-    cb_adb_state->addItem("开");
-    cb_screenshot_btn = new QComboBox();
-    cb_screenshot_btn->addItem("关");
-    cb_screenshot_btn->addItem("开");
+    w = new QWidget();
+    setCentralWidget(w);
 
-    lbl_model = new QLabel(tr("设备型号:"));
-    lbl_bt_name = new QLabel(tr("蓝牙名:"));
-    lbl_homepage = new QLabel(tr("浏览器主页:"));
-    lbl_sleep_time = new QLabel(tr("屏幕待机:"));
-    lbl_bright_level = new QLabel(tr("默认亮度:"));
-    lbl_language = new QLabel(tr("默认语言:"));
-    lbl_displayId = new QLabel(tr("版本号:"));
-    lbl_timezone = new QLabel(tr("时区:"));
-    lbl_date_format = new QLabel(tr("时间格式:"));
-    lbl_volume = new QLabel(tr("默认音量:"));
-    lbl_wifi_state = new QLabel(tr("默认wifi:"));
-    lbl_bt_state = new QLabel(tr("默认蓝牙:"));
-    lbl_install_non_market = new QLabel(tr("未知来源安装:"));
-    lbl_adb_state = new QLabel(tr("adb调试模式:"));
-    lbl_screenshot_btn = new QLabel(tr("截图按钮:"));
+    prj_home_path = QDir::currentPath();
+
+    listItemCommon = new QListWidgetItem();
+    QIcon  icon(":/new/img/img/common.png");
+    listItemCommon->setIcon(icon);
+    listItemCommon->setText("常用修改项");
+    listItemCommon->setTextAlignment(Qt::AlignHCenter);
+
+    listItemHardware = new QListWidgetItem();
+    listItemHardware->setIcon(QIcon(":/new/img/img/hardware.png"));
+    listItemHardware->setText("硬件配置项");
+    listItemHardware->setTextAlignment(Qt::AlignHCenter);
+
+    listItemLauncher = new QListWidgetItem();
+    listItemLauncher->setIcon(QIcon(":/new/img/img/launcher.png"));
+    listItemLauncher->setText("Launcher");
+    listItemLauncher->setTextAlignment(Qt::AlignHCenter);
+
+    listitemOthers = new QListWidgetItem();
+    listitemOthers->setIcon(QIcon(":/new/img/img/others.png"));
+    listitemOthers->setText(tr("其他项"));
+    listitemOthers->setTextAlignment(Qt::AlignHCenter);
+
+    listItemFunction = new QListWidgetItem();
+    listItemFunction->setIcon(QIcon(":/new/img/img/function.png"));
+    listItemFunction->setText(tr("功能补丁"));
+    listItemFunction->setTextAlignment(Qt::AlignHCenter);
+
+    listWidget = new QListWidget();
+    listWidget->setFlow(QListView::TopToBottom);
+    listWidget->setViewMode(QListView::IconMode);
+    listWidget->setWrapping(false);
+    listWidget->setResizeMode(QListView::Adjust);
+    listWidget->setMovement(QListView::Static);
+    listWidget->setIconSize(QSize(100, 100));
 
 
-    common_page_w = new QWidget();
-    common_page_scrollArea = new QScrollArea(common_page_w);
-    QVBoxLayout *common_page_layout = new QVBoxLayout(common_page_w);
-    QWidget *common_scrollWidget = new QWidget(common_page_scrollArea);
-    QGridLayout *common_scrollLayout = new QGridLayout(common_scrollWidget);
 
-    common_scrollLayout->addWidget(lbl_model, 0, 0);
-    common_scrollLayout->addWidget(le_model, 0, 1);
-    common_scrollLayout->addWidget(lbl_bt_name, 1, 0);
-    common_scrollLayout->addWidget(le_bt_name, 1, 1);
-    common_scrollLayout->addWidget(lbl_homepage, 2, 0);
-    common_scrollLayout->addWidget(le_homepage, 2, 1);
-    common_scrollLayout->addWidget(lbl_sleep_time, 3, 0);
-    common_scrollLayout->addWidget(le_sleep_time, 3, 1);
-    common_scrollLayout->addWidget(lbl_displayId, 4, 0);
-    common_scrollLayout->addWidget(le_displayId, 4, 1);
-    common_scrollLayout->addWidget(lbl_language, 5, 0);
-    common_scrollLayout->addWidget(cb_language, 5, 1);
-    common_scrollLayout->addWidget(lbl_displayId, 6, 0);
-    common_scrollLayout->addWidget(le_displayId, 6, 1);
-    common_scrollLayout->addWidget(lbl_wifi_state, 7, 0);
-    common_scrollLayout->addWidget(cb_wifi_state, 7, 1);
-    common_scrollLayout->addWidget(lbl_bt_state, 8, 0);
-    common_scrollLayout->addWidget(cb_bt_state, 8, 1);
-    common_scrollLayout->addWidget(lbl_timezone, 9, 0);
-    common_scrollLayout->addWidget(cb_timezone, 9, 1);
-    common_scrollLayout->addWidget(lbl_date_format, 10, 0);
-    common_scrollLayout->addWidget(cb_date_format, 10, 1);
-    common_scrollLayout->addWidget(lbl_volume, 11, 0);
-    common_scrollLayout->addWidget(cb_volume, 11, 1);
-    common_scrollLayout->addWidget(lbl_adb_state, 12, 0);
-    common_scrollLayout->addWidget(cb_adb_state, 12, 1);
-    common_scrollLayout->addWidget(lbl_screenshot_btn, 13, 0);
-    common_scrollLayout->addWidget(cb_screenshot_btn, 13, 1);
-    common_scrollLayout->setSpacing(15);
+    listWidget->addItem(listItemCommon);
+    listWidget->addItem(listItemHardware);
+    listWidget->addItem(listItemLauncher);
+    listWidget->addItem(listitemOthers);
+    listWidget->addItem(listItemFunction);
+    stackedWidget = new QStackedWidget();
+    stackedWidget->addWidget(&commonPage);
+    stackedWidget->addWidget(&hardwarePage);
+    stackedWidget->addWidget(&launcher_page);
+    stackedWidget->addWidget(&othersPage);
+    stackedWidget->addWidget(&functionPage);
 
-    common_page_scrollArea->setWidget(common_scrollWidget);
-    common_page_layout->addWidget(common_page_scrollArea);
+    connect(listWidget, SIGNAL(currentRowChanged(int)), stackedWidget, SLOT(setCurrentIndex(int)));
 
+    QHBoxLayout *main_layout = new QHBoxLayout();
+    main_layout->addWidget(listWidget);
+    main_layout->addWidget(stackedWidget);
+    main_layout->setStretchFactor(listWidget,1);
+    main_layout->setStretchFactor(stackedWidget, 7);
+    w->setLayout(main_layout);
 
 }
+
 
 void MainWindow::on_actNew_triggered()
 {

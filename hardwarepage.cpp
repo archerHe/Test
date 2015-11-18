@@ -59,8 +59,9 @@ void HardwarePage::initWidget()
     cb_sim_num->addItem("双卡");
     cb_sim_num->addItem("单卡");
     cb_ddr_fre = new QComboBox();
-    cb_ddr_fre->addItem("455");
+    cb_ddr_fre->addItem("312");
     cb_ddr_fre->addItem("400");
+    cb_ddr_fre->addItem("455");
 
     gridLayout->addWidget(lbl_screen, 0, 0);
     gridLayout->addWidget(cb_screen, 0, 1);
@@ -120,5 +121,35 @@ void HardwarePage::loadCfg()
     preFrontCamId   = textHelper.readCam("front", dtsCfg);
     cb_back_cam->setCurrentIndex(preBackCamId);
     cb_front_cam->setCurrentIndex(preFrontCamId);
+
+    QString strDDR = textHelper.readTextStr(boardCfg, "FEAT_POW_EMIF_MAX_DDR2_FREQ", "boardCfg");
+    if(strDDR == "312")
+    {
+        cb_ddr_fre->setCurrentIndex(0);
+    }else if(strDDR == "400")
+    {
+        cb_ddr_fre->setCurrentIndex(1);
+    }else if(strDDR == "455")
+    {
+        cb_ddr_fre->setCurrentIndex(2);
+    }
+
+    QString strSim = textHelper.readTextStr(boardCfg, "BUILD_DSDS", "boardCfg");
+    if(strSim == "true")
+    {
+        cb_sim_num->setCurrentIndex(0);
+    }else
+    {
+        cb_sim_num->setCurrentIndex(1);
+    }
+
+    QString strScreenType = textHelper.readTextStr(kernelCfg, "USE_IPS_LCD=y", "kernelCfg");
+    if(strScreenType == "IPS")
+    {
+        cb_screen->setCurrentIndex(1);
+    }else
+    {
+        cb_screen->setCurrentIndex(0);
+    }
 
 }

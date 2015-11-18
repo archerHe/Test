@@ -7,5 +7,11 @@
         <file>img/save.png</file>
         <file>img/create.png</file>
         <file>img/apply.png</file>
+        <file>img/common.png</file>
+        <file>img/hardware.png</file>
+        <file>img/launcher.png</file>
+        <file>img/others.png</file>
+        <file>img/terminal.png</file>
+        <file>img/function.png</file>
     </qresource>
 </RCC>
