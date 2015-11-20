@@ -177,8 +177,10 @@ void CommonPage::enableWidget()
 
 void CommonPage::loadCfg()
 {
-    if(Wizard::wizardAcceptFlag == false)
+    if(Global::srcPath == "")
+    {
         return;
+    }
     enableWidget();
     QString versionMk = Global::srcPath + "/" + Global::devicePath + "/version_id.mk";
     QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
@@ -198,6 +200,8 @@ void CommonPage::loadCfg()
     cb_bt_state->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_bluetooth_on", "xml").compare("false") ? 1:0));
     cb_adb_state->setCurrentIndex((textHelper.readTextStr(sofiaMk, "persist.sys.usb.config", "mk")).contains("adb") ? 1:0);
     cb_screenshot_btn->setCurrentIndex((textHelper.readTextStr(defSettingProvider, "def_screenshot_button_show", "xml").compare("false") ? 1:0));
+
+
 }
 
 void CommonPage::saveCfg()
@@ -243,5 +247,32 @@ void CommonPage::saveCfg()
     }else
     {
         textHelper.modifyXml(defSettingProvider, "def_screenshot_button_show", "true");
+    }
+
+    QSqlDatabase db = QSqlDatabase::database("custom");
+
+    QSqlQuery query = QSqlQuery(db);
+    QString colon = "\"";
+    QString strExec =   "insert into commonpage values(" + colon + Global::prj_name + colon + ","
+                        + colon + le_model->text() + colon + ","
+                        + colon + le_bt_name->text() + colon + ","
+                        + colon + le_homepage->text() + colon + ","
+                        + colon + le_sleep_time->text() + colon + ","
+                        + colon + le_language->text() + colon + ","
+                        + colon + le_country->text() + colon + ","
+                        + colon + le_displayId->text()+ colon + ","
+                        +         cb_wifi_state->currentIndex() + ","
+                        +         cb_bt_state->currentIndex() + ","
+                        + colon + le_timezone->text() + colon + ","
+                        +         cb_adb_state->currentIndex() + ","
+                        +         cb_screenshot_btn->currentIndex()
+                        + ")";
+    qDebug() << strExec;
+    if(query.exec(strExec))
+    {
+        qDebug() << "insert commonpage ok";
+    }
+    else{
+        qDebug() << "insert commonpage fail";
     }
 }

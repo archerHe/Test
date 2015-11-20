@@ -14,6 +14,9 @@ public:
     static QString kernelCfgPath;
     static QString dtsPath;
     static QString overlayPath;
+    static QString prj_name;
+    static QString textEditorPath;
+    static QString geditTE;
 
 
 };

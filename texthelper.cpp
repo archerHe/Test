@@ -41,6 +41,7 @@ QString TextHelper::readTextStr(QString filePath, QString objStr, QString typeFl
                 if(typeFlag == "xml")
                 {
                     resultStr = readXml(objLine);
+                    qDebug() <<  "objStr:" << objStr << "result:" << resultStr;
                     break;
                 }else if(typeFlag == "boardCfg")
                 {
@@ -106,13 +107,21 @@ bool TextHelper::modifyXml(QString filePath, QString attr, QString newStr)
         }
        n = n.nextSibling();
     }
-    QFile f(filePath);
-    if(!f.open(QIODevice::WriteOnly))
+//    QFile f(filePath);
+//    if(!f.open(QIODevice::WriteOnly))
+ //   {
+ //       return false;
+   // }
+    QFile temp("/home/heyuan/Src/QT_workspace/build-Test-Desktop_Qt_5_5_0_GCC_64bit-Debug/tmp/defaults.xml");
+    if(!temp.open(QIODevice::WriteOnly))
     {
+        qDebug() << "tmp/defaults.xml open fail!!";
         return false;
     }
-    QTextStream out(&file);
+
+    QTextStream out(&temp);
     doc.save(out, 4, QDomNode::EncodingFromTextStream);
+    fhghghf
     f.close();
 }
 
@@ -220,7 +229,13 @@ int TextHelper::disableCam(int camId, QString dtsPath)
     newDtsFile->flush();
     newDtsFile->close();
     dtsFile->remove();
-    newDtsFile->copy(dtsPath);
+    if(newDtsFile->copy(dtsPath))
+    {
+        qDebug() << "camId:" << camId << " file copy ok";
+    }else
+    {
+        qDebug() << "camId: " << camId << "file copy fail!!!";
+    }
     return camId;
 }
 
@@ -254,7 +269,15 @@ int TextHelper::enableCam(int camId, QString dtsPath)
     newDtsFile->flush();
     newDtsFile->close();
     dtsFile->remove();
-    newDtsFile->copy(dtsPath);
+
+    if(newDtsFile->copy(dtsPath))
+    {
+        qDebug() << "camId:" << camId << " file copy ok";
+    }else
+    {
+        qDebug() << "camId: " << camId << "file copy fail!!!";
+        return -1;
+    }
     return camId;
 }
 
@@ -267,10 +290,12 @@ bool TextHelper::writeToText(QString filePath, QString str, QString value, QStri
     QString strLine;
     if(!oriFile->open(QIODevice::ReadOnly))
     {
+        qDebug() << "oriFile return false";
         return false;
     }
     if(!tempFile->open(QIODevice::WriteOnly))
     {
+        qDebug() << "tempFile return false";
         return false;
     }
     while(!oriTS.atEnd())
@@ -280,10 +305,11 @@ bool TextHelper::writeToText(QString filePath, QString str, QString value, QStri
         {
             if(split == "id")
             {
-                tempTS << "export" << " := " << value << "\n";
+                tempTS << "export " << str << " := " << value << "\n";
                 continue;
             }
             tempTS << str << split << value << "\n";
+            qDebug() << "tempTS: " << str << split << value;
             continue;
         }
         tempTS << strLine << "\n";
@@ -292,7 +318,14 @@ bool TextHelper::writeToText(QString filePath, QString str, QString value, QStri
     tempFile->flush();
     tempFile->close();
     oriFile->remove();
-    tempFile->copy(filePath);
+    if(tempFile->copy(filePath))
+    {
+        qDebug() << "copy ok" << filePath;
+    }else
+    {
+        qDebug() << "copy fail" << filePath << "  str: " << str;
+        return false;
+    }
     return true;
 }
 
@@ -329,7 +362,14 @@ bool TextHelper::addWallpaperXml(QString filePath, QString newStr)
     tempXml.flush();
     tempXml.close();
     wallpaperXml.remove();
-    tempXml.copy(filePath);
+
+    if(tempXml.copy(filePath))
+    {
+        qDebug() << "str:" << newStr << " file copy ok";
+    }else
+    {
+        qDebug() << "addWallpaperXml: str: " << newStr << "file copy fail!!!";
+    }
 }
 
 

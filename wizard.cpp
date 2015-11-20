@@ -23,7 +23,6 @@ Wizard::Wizard(QWidget *parent) :
     initFirstPage();
     addPage(firstPage);
 
-Wizard::wizardAcceptFlag = false;
 
 }
 
@@ -57,6 +56,10 @@ void Wizard::initFirstPage()
     firstPage->setLayout(gridlayout);
 }
 
+/*
+ *暂没用第二页导航
+ *
+*/
 void Wizard::initSecondPage()
 {
     secondPage = new QWizardPage(this);
@@ -95,15 +98,17 @@ void Wizard::createPrj()
      qDir->mkdir("Project/" + lePrjName->text());
     QDir::setCurrent("Project/" + lePrjName->text());
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    Global::prj_name = lePrjName->text();
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "custom");
     db.setDatabaseName(lePrjName->text() + ".db");
     if(db.open())
     {
-        qDebug()<<"create database success";
+        qDebug()<<" Wizard : create database success";
     }
     else
     {
-        qDebug()<<"create fail database";
+        qDebug()<<" Wizard: create fail database";
     }
 
     QSqlQuery query = QSqlQuery(db);
@@ -115,36 +120,48 @@ void Wizard::createPrj()
             qDebug()<<"drop table common_page";
         }
     }
-    QString str_exec = "create table common_page("
-                       "id integer primary key autoincrement,"
+    QString str_exec1 = "create table commonpage("
+                       "prj_name varchar,"
                        "model varchar,"
                        "bt_name varchar,"
                         "homepage varchar,"
-                        "sleep_time int,"
+                        "sleep_time varchar,"
                         "def_language varchar,"
+                        "def_country, varchar"
                         "display_id varchar,"
-                        "wifi_state varchar,"
-                        "bt_state varchar,"
+                        "wifi_state integer,"
+                        "bt_state integer,"
                         "timezone varchar,"
-                        "def_volume int,"
-                        "adb_state varchar,"
-                        "screenshot_btn varchar"
+                        "adb_state integer,"
+                        "screenshot_btn integer"
                         ")";
-    if(query.exec(str_exec))
+
+    QString str_exec2 = "create table hardware("
+                        "lcd_type integer"
+                        "flash_type integer"
+                        "back_cam varchar"
+                        "front_cam varchar"
+                        "simCard integer"
+                        ")";
+
+    if(query.exec(str_exec1))
     {
-        qDebug() << "create table success";
+        qDebug() << "create table commonpage success";
     }
     else
     {
-        qDebug() << "fail create table";
+        qDebug() << "fail create commonpage table";
+    }
+    if(query.exec(str_exec2))
+    {
+        qDebug() << "create table hardware success";
+    }
+    else
+    {
+        qDebug() << "fail create hardware table";
     }
 
-   /* query.exec("insert into common_page values("
-               "null,"
-               "F719SR,"
-               "QT,"
-               "www.baidu.com"
-               "1000)");*/
+
     QFile cfg(lePrjName->text() + "." + "prj");
     QTextStream out(&cfg);
     if(!cfg.open(QFile::WriteOnly))
@@ -167,7 +184,6 @@ void Wizard::on_choosePrjBtn_clicked()
 void Wizard::accept()
 {
       createPrj();
-    Wizard::wizardAcceptFlag = true;
       close();
 
 }

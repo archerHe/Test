@@ -110,8 +110,10 @@ void HardwarePage::enableWidget()
 
 void HardwarePage::loadCfg()
 {
-    if(Wizard::wizardAcceptFlag == false)
+    if(Global::srcPath == "")
+    {
         return;
+    }
     enableWidget();
     QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
     QString dtsCfg = Global::srcPath + "/" + Global::dtsPath;
@@ -151,5 +153,37 @@ void HardwarePage::loadCfg()
     {
         cb_screen->setCurrentIndex(0);
     }
+
+
+
+}
+
+void HardwarePage::saveCfg()
+{
+    QString boardCfg = Global::srcPath + "/" + Global::devicePath + "/BoardConfig.mk";
+    QString dtsCfg = Global::srcPath + "/" + Global::dtsPath;
+    QString kernelCfg = Global::srcPath + "/" + Global::kernelCfgPath;
+
+    textHelper.writeToText(boardCfg, "FEAT_POW_EMIF_MAX_DDR2_FREQ", cb_ddr_fre->currentText(), ":=");
+    if(cb_sim_num->currentIndex() == 0)
+    {
+        textHelper.writeToText(boardCfg, "BUILD_DSDS", "true", ":=");
+    }else
+    {
+        qDebug() << "BUILD_DSDS";
+        textHelper.writeToText(boardCfg, "BUILD_DSDS", "false", ":=");
+    }
+    if(cb_screen->currentIndex() == 0)
+    {
+        textHelper.writeToText(kernelCfg, "USE_IPS_LCD", "n", "=" );
+    }else
+    {
+        qDebug() << "USE_IPS_LCD";
+        textHelper.writeToText(kernelCfg, "USE_IPS_LCD", "y", "=" );
+    }
+
+    textHelper.writeCam(preBackCamId, cb_back_cam->currentIndex(), dtsCfg);
+    textHelper.writeCam(preFrontCamId + 6, cb_front_cam->currentIndex() + 6, dtsCfg);
+
 
 }

@@ -9,6 +9,8 @@
 #include <QGridLayout>
 #include <QScrollArea>
 #include <QSpacerItem>
+#include <QDesktopServices>
+#include <QMessageBox>
 #include "global.h"
 #include "texthelper.h"
 
@@ -29,9 +31,12 @@ public:
     void enableWidget();
     void cpWallpaper(QString wallpaperPath);
 
+public slots:
+    void loadCfg();
 
 private slots:
     void btn_wallpaper_choose();
+    void btnOpenWallpaperDir();
 
 
 private:
@@ -45,6 +50,7 @@ private:
     QLabel *lbl_wallpaper;
     QLineEdit *le_wallpaper;
     QPushButton *btn_select_wallper;
+    QPushButton *btn_open_wallpaper_dir;
     QLabel *lbl_icon_site;
     QPushButton *btn_icon_site;
 

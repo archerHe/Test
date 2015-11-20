@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml
+QT       += core gui xml uitools
 QT       += sql
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,7 +42,8 @@ FORMS    += mainwindow.ui \
     hardwarepage.ui \
     commonpage.ui \
     functionpage.ui \
-    otherspage.ui
+    otherspage.ui \
+    settingtexteditor.ui
 
 
 

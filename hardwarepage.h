@@ -14,6 +14,8 @@
 #include <QGridLayout>
 #include <QScrollArea>
 #include <QSpacerItem>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include "global.h"
 #include "texthelper.h"
 #include "wizard.h"
@@ -36,7 +38,7 @@ public:
 
 public slots:
     void loadCfg();
-
+    void saveCfg();
 private:
     Ui::HardwarePage *ui;
 

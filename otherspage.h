@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QDir>
+#include "global.h"
 
 namespace Ui {
 class OthersPage;
@@ -28,13 +29,20 @@ public:
     ~OthersPage();
 
     void initWidget();
-
+    bool copyRecursively(const QString &srcFilePath,const QString &tgtFilePath);
+    bool copyDir(const QString &source, const QString &destination, bool override);
 
 public slots:
     void selectWallpaper();
+    void loadCfg();
+    void saveCfg();
+    void selectExtFiles();
+    void copyDefWallpaper();
+    void copyExtFiles();
 
 private:
     Ui::OthersPage *ui;
+
 
     QScrollArea     *scroll;
     QWidget         *w;
@@ -48,6 +56,10 @@ private:
     QLabel          *lbl_extFiles;
     QLineEdit       *le_extFiles;
     QPushButton     *btn_extFiles;
+
+    QString         wallpaper_600dp;
+    QString         wallpaper_720dp;
+    QString         wallpaper_nodp;
 
 
 

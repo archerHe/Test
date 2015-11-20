@@ -18,6 +18,8 @@
 #include <QComboBox>
 #include <QListWidgetItem>
 #include <QIcon>
+#include <QUiLoader>
+#include <QFile>
 
 namespace Ui {
 class MainWindow;
@@ -34,16 +36,25 @@ public:
     void initDir();
     void initMainWindow();
 
+public slots:
+    void settingTEOK();
+    void settingTECancel();
 
 
 private slots:
     void on_actNew_triggered();
 
+    void on_actOpen_triggered();
+
+    void on_actSetingTE_triggered();
+
+    void on_actSave_triggered();
 
 private:
     Ui::MainWindow *ui;
 
     QWidget *w;
+    QWidget *wSettingTE;
 
     CommonPage      commonPage;
     Launcher_page   launcher_page;
@@ -63,6 +74,7 @@ private:
     QListWidgetItem *listitemOthers;
 
     QString prj_home_path;
+    QString textEditorPath;
 };
 
 #endif // MAINWINDOW_H

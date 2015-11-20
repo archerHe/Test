@@ -9,6 +9,8 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QSpacerItem>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include "texthelper.h"
 #include "global.h"
 #include "wizard.h"

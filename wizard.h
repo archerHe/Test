@@ -21,7 +21,7 @@ public:
     explicit Wizard(QWidget *parent = 0);
     ~Wizard();
 
-    static bool wizardAcceptFlag;
+
 
 private:
     Ui::Wizard *ui;
