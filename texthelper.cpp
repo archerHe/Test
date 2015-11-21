@@ -107,22 +107,21 @@ bool TextHelper::modifyXml(QString filePath, QString attr, QString newStr)
         }
        n = n.nextSibling();
     }
-//    QFile f(filePath);
-//    if(!f.open(QIODevice::WriteOnly))
- //   {
- //       return false;
-   // }
-    QFile temp("/home/heyuan/Src/QT_workspace/build-Test-Desktop_Qt_5_5_0_GCC_64bit-Debug/tmp/defaults.xml");
+
+    QFile temp(Global::prj_home_path + "/tmp/tmp.xml");
     if(!temp.open(QIODevice::WriteOnly))
     {
-        qDebug() << "tmp/defaults.xml open fail!!";
+        qDebug() << "tmp/tmp.xml open fail!!";
         return false;
     }
 
     QTextStream out(&temp);
     doc.save(out, 4, QDomNode::EncodingFromTextStream);
-    fhghghf
-    f.close();
+    temp.flush();
+    temp.close();
+    QFile::remove(filePath);
+    QFile::copy(Global::prj_home_path + "/tmp/tmp.xml", filePath);
+
 }
 
 int TextHelper::readCam(QString camType, QString dtsPath)

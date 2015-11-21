@@ -201,9 +201,7 @@ void MainWindow::on_actSetingTE_triggered()
  //       le_te->setText(Global::geditTE);
     //}
     //file.close();
-    wSettingTE->showNormal();
-
-
+    //wSettingTE->showNormal();
 }
 
 void MainWindow::on_actSave_triggered()

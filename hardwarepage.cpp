@@ -185,5 +185,47 @@ void HardwarePage::saveCfg()
     textHelper.writeCam(preBackCamId, cb_back_cam->currentIndex(), dtsCfg);
     textHelper.writeCam(preFrontCamId + 6, cb_front_cam->currentIndex() + 6, dtsCfg);
 
+    QSqlDatabase db = QSqlDatabase::database("custom");
+
+    QSqlQuery query = QSqlQuery(db);
+    QString colon = "\"";
+    QString strExec =   "insert into hardware values("
+                        + QString::number(cb_screen->currentIndex(), 10) + ","
+                        + QString::number(cb_flash->currentIndex(), 10) + ","
+                        + colon + cb_back_cam->currentText() + colon + ","
+                        + colon + cb_front_cam->currentText() + colon  + ","
+                        + QString::number(cb_sim_num->currentIndex(), 10) + ","
+                        + colon + cb_ddr_fre->currentText() + colon
+                        + ")";
+    QString strSpace = " ";
+   QString strUpdate = "update hardware set "
+                      + strSpace + "lcd_type=" + QString::number(cb_screen->currentIndex(),10) + ","
+                      + strSpace + "flash_type=" + QString::number(cb_flash->currentIndex(), 10) + ","
+                      + strSpace + "back_cam=" + colon + cb_back_cam->currentText() + colon + ","
+                      + strSpace + "front_cam=" + colon + cb_front_cam->currentText() + colon  + ","
+                      + strSpace + "simCard=" + QString::number(cb_sim_num->currentIndex(), 10) + ","
+                      + strSpace + "ddrFreq=" + colon + cb_ddr_fre->currentText() + colon;
+
+
+
+ /*
+    if(query.exec(strExec))
+    {
+        qDebug() << "insert hardware ok";
+    }
+    else{
+        qDebug() << "insert hardware fail";
+        qDebug() << strExec;
+    }
+*/
+           if(query.exec(strUpdate))
+           {
+               qDebug() << "update hardware ok";
+           }
+           else
+            {
+               qDebug() << "update hardware fail";
+               qDebug() << strUpdate;
+           }
 
 }

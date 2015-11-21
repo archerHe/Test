@@ -120,14 +120,14 @@ void Wizard::createPrj()
             qDebug()<<"drop table common_page";
         }
     }
-    QString str_exec1 = "create table commonpage("
+    QString strCreatePage1 = "create table commonpage("
                        "prj_name varchar,"
                        "model varchar,"
                        "bt_name varchar,"
                         "homepage varchar,"
                         "sleep_time varchar,"
                         "def_language varchar,"
-                        "def_country, varchar"
+                        "def_country varchar,"
                         "display_id varchar,"
                         "wifi_state integer,"
                         "bt_state integer,"
@@ -136,15 +136,41 @@ void Wizard::createPrj()
                         "screenshot_btn integer"
                         ")";
 
-    QString str_exec2 = "create table hardware("
-                        "lcd_type integer"
-                        "flash_type integer"
-                        "back_cam varchar"
-                        "front_cam varchar"
-                        "simCard integer"
+    QString strCreatePage2 = "create table hardware("
+                        "lcd_type integer,"
+                        "flash_type integer,"
+                        "back_cam varchar,"
+                        "front_cam varchar,"
+                        "simCard integer,"
+                        "ddrFreq varchar"
                         ")";
 
-    if(query.exec(str_exec1))
+    QString strInsertPage1 = "insert into commonpage values("
+                             "null,"
+                             "null,"
+                             "null,"
+                             "null,"
+                             "null,"
+                             "null,"
+                             "null,"
+                             "null,"
+                             "0,"
+                             "0,"
+                             "null,"
+                             "0,"
+                             "0"
+                             ")";
+
+    QString strInsertPage2 = "insert into hardware values("
+                             "0,"
+                             "0,"
+                             "null,"
+                             "null,"
+                             "0,"
+                             "null"
+                             ")";
+
+    if(query.exec(strCreatePage1))
     {
         qDebug() << "create table commonpage success";
     }
@@ -152,13 +178,29 @@ void Wizard::createPrj()
     {
         qDebug() << "fail create commonpage table";
     }
-    if(query.exec(str_exec2))
+    if(query.exec(strCreatePage2))
     {
         qDebug() << "create table hardware success";
     }
     else
     {
         qDebug() << "fail create hardware table";
+    }
+    if(query.exec(strInsertPage1))
+    {
+        qDebug() << "insert table commonpage success";
+    }else
+    {
+        qDebug() << "insert table commonpage fail";
+        qDebug() << strInsertPage1;
+    }
+    if(query.exec(strInsertPage2))
+    {
+        qDebug() << "insert table hardware success";
+    }else
+    {
+         qDebug() << "insert table hardware fail";
+         qDebug() << strInsertPage2;
     }
 
 

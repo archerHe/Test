@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QStringList>
 #include <QtXml>
+#include "global.h"
 
 class TextHelper
 {
@@ -30,6 +31,7 @@ private:
     QString oriText;
     QString newText;
     QString curPath;
+
 
 };
 

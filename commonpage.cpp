@@ -261,18 +261,44 @@ void CommonPage::saveCfg()
                         + colon + le_language->text() + colon + ","
                         + colon + le_country->text() + colon + ","
                         + colon + le_displayId->text()+ colon + ","
-                        +         cb_wifi_state->currentIndex() + ","
-                        +         cb_bt_state->currentIndex() + ","
+                        + QString::number(cb_wifi_state->currentIndex(), 10) + ","
+                        + QString::number(cb_bt_state->currentIndex(), 10) + ","
                         + colon + le_timezone->text() + colon + ","
-                        +         cb_adb_state->currentIndex() + ","
-                        +         cb_screenshot_btn->currentIndex()
+                        + QString::number(cb_adb_state->currentIndex(), 10) + ","
+                        + QString::number(cb_screenshot_btn->currentIndex(), 10)
                         + ")";
-    qDebug() << strExec;
+
+    QString strSpace = " ";
+    QString strUpdate = "update commonpage set "
+                        + strSpace + "prj_name=" + colon + Global::prj_name + colon + ","
+                        + strSpace + "model=" + colon + le_model->text() + colon + ","
+                        + strSpace + "bt_name=" + colon + le_bt_name->text() + colon + ","
+                        + strSpace + "homepage=" + colon + le_homepage->text() + colon + ","
+                        + strSpace + "sleep_time=" + colon + le_sleep_time->text() + colon + ","
+                        + strSpace + "def_language=" + colon + le_language->text() + colon + ","
+                        + strSpace + "def_country=" + colon + le_country->text() + colon + ","
+                        + strSpace + "display_id=" + colon + le_displayId->text()+ colon + ","
+                        + strSpace +  "wifi_state=" + QString::number(cb_wifi_state->currentIndex(), 10) + ","
+                        + strSpace + "bt_state=" + QString::number(cb_bt_state->currentIndex(), 10) + ","
+                        + strSpace + "timezone=" + colon + le_timezone->text() + colon + ","
+                        + strSpace + "adb_state=" + QString::number(cb_adb_state->currentIndex(), 10) + ","
+                        + strSpace + "screenshot_btn=" + QString::number(cb_screenshot_btn->currentIndex(), 10);
+/*
     if(query.exec(strExec))
     {
         qDebug() << "insert commonpage ok";
     }
     else{
         qDebug() << "insert commonpage fail";
+        qDebug() << strExec;
+    }
+*/
+    if(query.exec(strUpdate))
+    {
+        qDebug() << "update commonpage ok";
+    }
+    else{
+        qDebug() << "update commonpage fail";
+        qDebug() << strUpdate;
     }
 }
