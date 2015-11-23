@@ -45,6 +45,7 @@ void CommonPage::initWidget()
         le_country->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
         btn_languageList = new QPushButton("显示支持语言列表");
+        connect(btn_languageList, SIGNAL(clicked(bool)), this, SLOT(openLanguageList()));
         cb_wifi_state = new QComboBox();
         cb_wifi_state->addItem("关");
         cb_wifi_state->addItem("开");
@@ -137,12 +138,12 @@ void CommonPage::initWidget()
         //common_scrollLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Expanding), 9, 3);
         common_scrollLayout->addWidget(lbl_date_format, 10, 0);
         common_scrollLayout->addWidget(cb_date_format, 10, 1);
-        common_scrollLayout->addWidget(lbl_volume, 11, 0);
-        common_scrollLayout->addWidget(cb_volume, 11, 1);
-        common_scrollLayout->addWidget(lbl_adb_state, 12, 0);
-        common_scrollLayout->addWidget(cb_adb_state, 12, 1);
-        common_scrollLayout->addWidget(lbl_screenshot_btn, 13, 0);
-        common_scrollLayout->addWidget(cb_screenshot_btn, 13, 1);
+       // common_scrollLayout->addWidget(lbl_volume, 11, 0);
+        //common_scrollLayout->addWidget(cb_volume, 11, 1);
+        common_scrollLayout->addWidget(lbl_adb_state, 11, 0);
+        common_scrollLayout->addWidget(cb_adb_state, 11, 1);
+        common_scrollLayout->addWidget(lbl_screenshot_btn, 12, 0);
+        common_scrollLayout->addWidget(cb_screenshot_btn, 12, 1);
 
        // common_scrollLayout->setColumnStretch(2,-1);
         common_scrollLayout->setSpacing(15);
@@ -301,4 +302,19 @@ void CommonPage::saveCfg()
         qDebug() << "update commonpage fail";
         qDebug() << strUpdate;
     }
+}
+
+void CommonPage::openLanguageList()
+{
+    QStringList strList;
+    strList << Global::prj_home_path + "/files/LanguageList.txt";
+
+    QProcess::startDetached(Global::geditTE, strList);
+}
+
+void CommonPage::openTimeZonesList()
+{
+    QStringList strList;
+    strList << Global::prj_home_path + "/files/TimeZones.txt";
+    QProcess::startDetached(Global::geditTE, strList);
 }

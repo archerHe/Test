@@ -208,5 +208,48 @@ void MainWindow::on_actSave_triggered()
 {
     commonPage.saveCfg();
     hardwarePage.saveCfg();
+    launcher_page.saveCfg();
     othersPage.saveCfg();
+}
+
+void MainWindow::on_actClose_triggered()
+{
+    int ret = QMessageBox::information(this, tr("关闭工程"), tr("是否要关闭当前工程，当前修改选项不会保存"), QMessageBox::Yes, QMessageBox::No);
+    if(ret == QMessageBox::Yes)
+    {
+        commonPage.disableWidget();
+        hardwarePage.disableWidget();
+        Global::srcPath = "";
+        Global::prj_name = "";
+    }
+    else if(ret == QMessageBox::No)
+    {
+        return;
+    }
+
+}
+
+void MainWindow::on_actExit_triggered()
+{
+    int ret = QMessageBox::information(this, tr("退出程序"), tr("退出当前程序～～～"), QMessageBox::Yes, QMessageBox::No);
+    if(ret == QMessageBox::Yes)
+    {
+        this->close();
+    }
+    else if(ret == QMessageBox::No)
+    {
+        return;
+    }
+}
+
+void MainWindow::on_actAbout_triggered()
+{
+
+}
+
+void MainWindow::on_actDoc_triggered()
+{
+    QStringList strList;
+    strList << Global::prj_home_path + "/doc/help.pdf";
+    QProcess::startDetached(Global::evincePdf, strList);
 }

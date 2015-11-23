@@ -44,7 +44,7 @@ void Launcher_page::initWidget()
 
     lbl_def_wallpaper   = new QLabel("默认壁纸:");
     lbl_img         = new QLabel();
-    le_def_wallpaper    = new QLineEdit();
+
     btn_def_wallper     = new QPushButton("。。。");
     btn_def_wallper->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -155,6 +155,15 @@ void Launcher_page::cpWallpaper(QString extWallpaperPath)
 void Launcher_page::loadCfg()
 {
     enableWidget();
+}
+
+void Launcher_page::saveCfg()
+{
+    if(le_wallpaper->text() == "")
+    {
+        return;
+    }
+    cpWallpaper(le_wallpaper->text());
 }
 
 void Launcher_page::btn_wallpaper_choose()

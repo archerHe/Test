@@ -17,6 +17,7 @@ public:
     static QString prj_name;
     static QString textEditorPath;
     static QString geditTE;
+    static QString evincePdf;
 
 
 };

@@ -39,7 +39,7 @@ void OthersPage::initWidget()
     connect(btn_extFiles, SIGNAL(clicked(bool)), this, SLOT(selectExtFiles()));
 
     QImage img;
-    img.load("/home/heyuan/Pic/sky01.jpg");
+    img.load(":/new/img/img/black.png");
     QImage result = img.scaled(200,200);
     lbl_img->setPixmap(QPixmap::fromImage(result));
     gridLayout->setColumnStretch(1,3);
@@ -71,10 +71,20 @@ void OthersPage::selectWallpaper()
 
 void OthersPage::loadCfg()
 {
+    if(Global::srcPath == "")
+    {
+        return;
+    }
     wallpaper_600dp = Global::srcPath + "/frameworks/base/core/res/res/drawable-sw600dp-nodpi/default_wallpaper.jpg";
     wallpaper_720dp = Global::srcPath + "/frameworks/base/core/res/res/drawable-sw720dp-nodpi/default_wallpaper.jpg";
     wallpaper_nodp  = Global::srcPath + "/frameworks/base/core/res/res/drawable-nodpi/default_wallpaper.jpg";
-    //qDebug() << wallpaper_600dp;
+    if(QFile::exists(wallpaper_600dp))
+    {
+        QImage img;
+        img.load(wallpaper_600dp);
+        QImage result = img.scaled(200,200);
+        lbl_img->setPixmap(QPixmap::fromImage(result));
+    }
 }
 
 void OthersPage::saveCfg()

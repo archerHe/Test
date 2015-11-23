@@ -11,6 +11,7 @@
 #include <QSpacerItem>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QProcess>
 #include "texthelper.h"
 #include "global.h"
 #include "wizard.h"
@@ -35,6 +36,8 @@ public:
 public slots:
     void loadCfg();
     void saveCfg();
+    void openLanguageList();
+    void openTimeZonesList();
 
 private:
     Ui::CommonPage *ui;

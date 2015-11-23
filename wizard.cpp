@@ -75,16 +75,6 @@ void Wizard::createPrj()
 
 
     QDir *qDir = new QDir();
-    if(qDir->exists(lePrjPath->text() + "/wb_project"))
-    {
-        Global::srcPath = lePrjPath->text();
-        qDebug() << "this is android root dir : " << Global::srcPath;
-    }
-    else
-    {
-        qDebug() << "not exist android root dir";
-    }
-
     if(qDir->exists("Project"))
     {
         qDebug() << "Project dir is exist";
@@ -95,7 +85,18 @@ void Wizard::createPrj()
 
         qDebug() << "create dir Project";
     }
-     qDir->mkdir("Project/" + lePrjName->text());
+    if(!qDir->exists("tmp"))
+    {
+        qDebug() << "tmp dir is not exist, then create";
+        qDir->mkdir("tmp");
+    }
+    if(!qDir->exists("log"))
+    {
+        qDebug() << "log dir is not exist, then create";
+        qDir->mkdir("log");
+    }
+
+    qDir->mkdir("Project/" + lePrjName->text());
     QDir::setCurrent("Project/" + lePrjName->text());
 
     Global::prj_name = lePrjName->text();
@@ -218,13 +219,34 @@ void Wizard::createPrj()
 
 void Wizard::on_choosePrjBtn_clicked()
 {
+    QDir *qDir = new QDir();
     QFileDialog *fileDlg = new QFileDialog();
     QString dirName =  fileDlg->getExistingDirectory(this);
+    if(qDir->exists(dirName + "/wb_project"))
+    {
+        Global::srcPath = dirName;
+        qDebug() << "this is android root dir : " << Global::srcPath;
+
+    }
+    else
+    {
+        QMessageBox::warning(this, tr("错误提示信息"), dirName + "不是一个有效的android源码根目录,\n请重新选择", QMessageBox::Abort);
+        qDebug() << "not exist android root dir";
+        return;
+    }
     lePrjPath->setText(dirName);
 }
 
 void Wizard::accept()
 {
+/*
+    if(lePrjPath->text() == "" || lePrjName->text() == "")
+    {
+        QMessageBox::warning(this, tr("错误提示信息"), tr("工程名，路径名不能为空"), QMessageBox::Abort);
+        qDebug() << "prjName srcPath  null";
+        return;
+    }
+    */
       createPrj();
       close();
 

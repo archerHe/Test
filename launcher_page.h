@@ -33,6 +33,7 @@ public:
 
 public slots:
     void loadCfg();
+    void saveCfg();
 
 private slots:
     void btn_wallpaper_choose();
@@ -56,7 +57,7 @@ private:
 
     QLabel          *lbl_img;
     QLabel          *lbl_def_wallpaper;
-    QLineEdit       *le_def_wallpaper;
+
     QPushButton     *btn_def_wallper;
     QLabel          *lbl_extFiles;
     QLineEdit       *le_extFiles;

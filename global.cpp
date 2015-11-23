@@ -12,3 +12,4 @@ QString Global::overlayPath = "device/rockchip/sofia3gr/overlay";
 QString Global::prj_name = "";
 QString Global::geditTE = "/usr/bin/gedit";
 QString Global::textEditorPath = "";
+QString Global::evincePdf = "/usr/bin/evince";

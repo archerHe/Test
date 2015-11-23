@@ -218,6 +218,10 @@ int TextHelper::disableCam(int camId, QString dtsPath)
         {
                newDts << strLine << "\n";
                newDts << "\t\tstatus = \"disabled\";\n";
+               if(camId == 7)
+               {
+                   newDts << "\t\tcompatible = \"galaxycore,gc0310-v4l2-i2c-subdev\";\n";
+               }
                strLine = dtsOld.readLine();
                continue;
         }

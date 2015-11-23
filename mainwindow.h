@@ -50,6 +50,14 @@ private slots:
 
     void on_actSave_triggered();
 
+    void on_actClose_triggered();
+
+    void on_actExit_triggered();
+
+    void on_actAbout_triggered();
+
+    void on_actDoc_triggered();
+
 private:
     Ui::MainWindow *ui;
 
