@@ -20,6 +20,8 @@
 #include <QIcon>
 #include <QUiLoader>
 #include <QFile>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 namespace Ui {
 class MainWindow;

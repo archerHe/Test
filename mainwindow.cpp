@@ -161,6 +161,17 @@ void MainWindow::on_actOpen_triggered()
     Global::srcPath = textHelper.readTextStr(prj_open_path, "ProjectPath", "");
     Global::prj_name = textHelper.readTextStr(prj_open_path, "ProjectName", "");
     qDebug() << Global::srcPath << "...." << Global::prj_name;
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "custom");
+    db.setDatabaseName("Project/" + Global::prj_name + "/" + Global::prj_name + ".db");
+    qDebug() << "prj_home :" << "Project/" + Global::prj_name + "/" + Global::prj_name + ".db";
+    if(db.open())
+    {
+        qDebug()<<" mainwindow : create database success";
+    }
+    else
+    {
+        qDebug()<<" mainwindow: create fail database";
+    }
     commonPage.loadCfg();
     hardwarePage.loadCfg();
     othersPage.loadCfg();

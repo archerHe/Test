@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     QDesktopWidget *dw = QApplication::desktop();
     w.setFixedSize(dw->width()*0.5, dw->height()*0.7);
 
-    //qInstallMessageHandler(outputMessage);
+    qInstallMessageHandler(outputMessage);
 
     w.show();
 

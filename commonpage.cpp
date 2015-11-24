@@ -60,6 +60,7 @@ void CommonPage::initWidget()
 
         le_timezone->setToolTip("百度城市英文名,\n在时区列表文件中搜索相应的值");
         btn_timezoneList = new QPushButton("支持时区列表");
+        connect(btn_timezoneList, SIGNAL(clicked()), this, SLOT(openTimeZonesList()));
         cb_date_format = new QComboBox();
         cb_date_format->addItem("24");
         cb_date_format->addItem("12");

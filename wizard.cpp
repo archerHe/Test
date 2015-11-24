@@ -38,6 +38,7 @@ void Wizard::initFirstPage()
     lblPrjPath = new QLabel();
     lePrjName = new QLineEdit();
     lePrjPath = new QLineEdit();
+    lePrjPath->setFocusPolicy(Qt::NoFocus);
     choosePrjBtn = new QPushButton("...");
     connect(choosePrjBtn,SIGNAL(clicked(bool)),this,SLOT(on_choosePrjBtn_clicked()));
     QHBoxLayout *hBoxLayout = new QHBoxLayout();
@@ -239,14 +240,14 @@ void Wizard::on_choosePrjBtn_clicked()
 
 void Wizard::accept()
 {
-/*
+
     if(lePrjPath->text() == "" || lePrjName->text() == "")
     {
         QMessageBox::warning(this, tr("错误提示信息"), tr("工程名，路径名不能为空"), QMessageBox::Abort);
         qDebug() << "prjName srcPath  null";
         return;
     }
-    */
+
       createPrj();
       close();
 

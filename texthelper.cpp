@@ -220,6 +220,7 @@ int TextHelper::disableCam(int camId, QString dtsPath)
                newDts << "\t\tstatus = \"disabled\";\n";
                if(camId == 7)
                {
+                   //以后要修改下dts文件，不然改过0310，再改回0310还会加这一行
                    newDts << "\t\tcompatible = \"galaxycore,gc0310-v4l2-i2c-subdev\";\n";
                }
                strLine = dtsOld.readLine();
